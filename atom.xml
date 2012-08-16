@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2012-06-16T08:18:46-04:00</updated>
+  <updated>2012-08-16T00:03:02-04:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -165,15 +165,6 @@
 <p>Tada! We now have successfully copied the HTML and flattened the CSS for each element. s_BREAKING_NEWS_BOX can now be loaded independently of its parent page.</p>
 
 <p>What would it take to do this server-side? In short, render the HTML in some sort of web view, then extract the flattened CSS for every element. While it is possible, and most likely the way to proceed with this project, letting the browser do the heavy lifting rendering CSS is definitely easier in the short term.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hello World]]></title>
-    <link href="http://nathancahill.github.com/blog/2012/06/15/hello-world/"/>
-    <updated>2012-06-15T20:54:00-04:00</updated>
-    <id>http://nathancahill.github.com/blog/2012/06/15/hello-world</id>
-    <content type="html"><![CDATA[<p>Hello World!</p>
 ]]></content>
   </entry>
   
