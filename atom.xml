@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2012-08-18T14:41:52-04:00</updated>
+  <updated>2012-08-29T12:18:25-04:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -12,6 +12,59 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Film: Canon AE-1 Program]]></title>
+    <link href="http://nathancahill.github.com/film-canon-ae-1-program/"/>
+    <updated>2012-08-28T20:20:00-04:00</updated>
+    <id>http://nathancahill.github.com/film-canon-ae-1-program</id>
+    <content type="html"><![CDATA[<p><img src="images/ae-1/8.jpg"></p>
+
+<div class="gallery">
+    <a class="fancybox" href="images/ae-1/2.jpg" title="Film: Canon AE-1 Program" rel="gallery2">
+        <img src="images/ae-1/2_m.jpg">
+    </a>
+    <a class="fancybox" href="images/ae-1/4.jpg" title="Film: Canon AE-1 Program" rel="gallery2">
+        <img src="images/ae-1/4_m.jpg">
+    </a>
+    <a class="fancybox" href="images/ae-1/5.jpg" title="Film: Canon AE-1 Program" rel="gallery2">
+        <img src="images/ae-1/5_m.jpg">
+    </a>
+    <a class="fancybox" href="images/ae-1/7.jpg" title="Film: Canon AE-1 Program" rel="gallery2">
+        <img src="images/ae-1/7_m.jpg">
+    </a>
+    <a class="fancybox" href="images/ae-1/1.jpg" title="Film: Canon AE-1 Program" rel="gallery2">
+        <img src="images/ae-1/1_m.jpg">
+    </a>
+    <a class="fancybox" href="images/ae-1/9.jpg" title="Film: Canon AE-1 Program" rel="gallery2">
+        <img src="images/ae-1/9_m.jpg">
+    </a>
+    <a class="fancybox" href="images/ae-1/10.jpg" title="Film: Canon AE-1 Program" rel="gallery2">
+        <img src="images/ae-1/10_m.jpg">
+    </a>
+    <a class="fancybox" href="images/ae-1/11.jpg" title="Film: Canon AE-1 Program" rel="gallery2">
+        <img src="images/ae-1/11_m.jpg">
+    </a>
+    <a class="fancybox" href="images/ae-1/12.jpg" title="Film: Canon AE-1 Program" rel="gallery2">
+        <img src="images/ae-1/12_m.jpg">
+    </a>
+    <a class="fancybox" href="images/ae-1/13.jpg" title="Film: Canon AE-1 Program" rel="gallery2">
+        <img src="images/ae-1/13_m.jpg">
+    </a>
+    <a class="fancybox" href="images/ae-1/14.jpg" title="Film: Canon AE-1 Program" rel="gallery2">
+        <img src="images/ae-1/14_m.jpg">
+    </a>
+    <a class="fancybox" href="images/ae-1/15.jpg" title="Film: Canon AE-1 Program" rel="gallery2">
+        <img src="images/ae-1/15_m.jpg">
+    </a>
+    <a class="fancybox" href="images/ae-1/21.jpg" title="Film: Canon AE-1 Program" rel="gallery2">
+        <img src="images/ae-1/21_m.jpg">
+    </a>
+    <div class="clear"></div>
+</div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Startup in... Latin America?]]></title>
