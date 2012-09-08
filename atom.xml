@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2012-08-29T12:37:09-04:00</updated>
+  <updated>2012-09-07T20:46:02-04:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -12,6 +12,151 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[OAuth with Twitter and Python Flask]]></title>
+    <link href="http://nathancahill.github.com/oauth-with-twitter-and-python-flask/"/>
+    <updated>2012-09-07T20:04:00-04:00</updated>
+    <id>http://nathancahill.github.com/oauth-with-twitter-and-python-flask</id>
+    <content type="html"><![CDATA[<p>Here&#8217;s a couple tips on getting OAuth to work with Python Flask.</p>
+
+<p>First, Flask has bunch of <a href="http://flask.pocoo.org/extensions/">awesome extensions</a> that
+make coding with Flask so easy. The two I am using for an OAuth login system are
+<a href="http://packages.python.org/Flask-OAuth/">Flask-OAuth</a> (obviously), and
+<a href="http://packages.python.org/Flask-Login/">Flask-Login</a>. The database I am using is
+Postgres, with the great <a href="http://packages.python.org/Flask-SQLAlchemy/">Flask-SQLAlchemy</a>
+ORM.</p>
+
+<p>The User class I am using just needs 3 properties:</p>
+
+<ul>
+<li><code>username</code></li>
+<li><code>token</code></li>
+<li><code>secret</code></li>
+</ul>
+
+
+<p>For Flask-OAuth, most of the default configuration works as described. However, I did have
+to change the <code>request_token_url</code>, <code>access_token_url</code> and <code>authorize_url</code>
+to use https. The <code>access_token_url</code> should point to
+&#8220;https://api.twitter.com/oauth/authenticate&#8221; for processing the login.</p>
+
+<p>I had trouble getting it to recognize the callback URL. I kept getting this error: <code>raise OAuthException('Failed to generate request token')</code>. I gave up debugging it,
+and just added the correct callback URL in the settings in Twitter.</p>
+
+<p>Using Flask-Login is also straight forward. I initially didn&#8217;t know how to make enable a
+User class to use the login system, turns out it&#8217;s just a four functions that have to be
+included in the class:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">get_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>  <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">is_authenticated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>  <span class="k">return</span> <span class="bp">True</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>  <span class="k">return</span> <span class="bp">True</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">is_anonymous</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>  <span class="k">return</span> <span class="bp">False</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The glue that makes the two play nicely together is all in these three functions:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/login&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">login</span><span class="p">():</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">current_user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">twitter</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="n">callback</span><span class="o">=</span><span class="n">url_for</span><span class="p">(</span><span class="s">&#39;oauth_authorized&#39;</span><span class="p">,</span>
+</span><span class='line'>      <span class="nb">next</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;next&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">request</span><span class="o">.</span><span class="n">referrer</span> <span class="ow">or</span> <span class="bp">None</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Before I send a Twitter OAuth request, I make sure the current_user is not authenticated.
+If I didn&#8217;t the OAuth would fail. Not sure why yet.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="nd">@app.route</span><span class="p">(</span><span class="s">&#39;/oauth-authorized&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="nd">@twitter.authorized_handler</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">oauth_authorized</span><span class="p">(</span><span class="n">resp</span><span class="p">):</span>
+</span><span class='line'>  <span class="n">next_url</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;next&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">url_for</span><span class="p">(</span><span class="s">&#39;index&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">resp</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">next_url</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">this_account</span> <span class="o">=</span> <span class="n">Account</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">username</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s">&#39;screen_name&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">this_account</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+</span><span class='line'>      <span class="n">new_account</span> <span class="o">=</span> <span class="n">Account</span><span class="p">(</span><span class="n">resp</span><span class="p">[</span><span class="s">&#39;screen_name&#39;</span><span class="p">],</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">resp</span><span class="p">[</span><span class="s">&#39;oauth_token&#39;</span><span class="p">],</span> <span class="n">resp</span><span class="p">[</span><span class="s">&#39;oauth_token_secret&#39;</span><span class="p">])</span>
+</span><span class='line'>      <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">new_account</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</span><span class='line'>      <span class="n">login_user</span><span class="p">(</span><span class="n">new_account</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>      <span class="n">login_user</span><span class="p">(</span><span class="n">this_account</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">next_url</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What the callback handler does:</p>
+
+<p>Once the authentication is complete, it looks in the database for the Twitter username. If
+it&#8217;s not found, it creates a new account and calls <code>login_user()</code>. If it is, it uses
+the returned account object to login the user.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="nd">@twitter.tokengetter</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">get_twitter_token</span><span class="p">():</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">current_user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>
+</span><span class='line'>      <span class="k">return</span> <span class="p">(</span><span class="n">current_user</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">current_user</span><span class="o">.</span><span class="n">secret</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>      <span class="k">return</span> <span class="bp">None</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This third function is self-explanatory.</p>
+
+<p>Now, it&#8217;s as easy adding the <code>@login_required</code> decorator before a secure page
+function.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Film: Canon AE-1 Program]]></title>
