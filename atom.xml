@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2012-09-19T02:57:28-04:00</updated>
+  <updated>2012-09-19T03:03:52-04:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -23,18 +23,18 @@ No matter what I&#8217;m doing, there&#8217;s always a command prompt a &#x2318;
 can read commands from <a href="http://stackoverflow.com/">Stackoverflow</a> while I&#8217;m typing #noob.</p>
 
 <p>This is the year 2012 though, and while we don&#8217;t have <a href="http://fuckjetpacks.com/read/why">jet packs</a> yet, we should at least be able to
-flick things around our screen by swiping our fingers. Enter <a href="http://www.boastr.de/">BetterTouchTool</a>. In the words of it&#8217;s creator, BTT lets you
-define tons of gestures for your Macbooks Trackpad, your MagicMouse and your MagicTrackpad.</p>
+flick things around a screen with a swipe of our fingers. Enter <a href="http://www.boastr.de/">BetterTouchTool</a>. This is basically an awesome
+app that lets you define a bunch of custom gestures for your trackpad and Magic Mouse. <a href="http://qsapp.com/">Quicksilver</a> for gestures, if you will.</p>
 
-<p>The magic glue to all of this is the key-binding option in iTerm. Go to iTerm Preferences > Profiles > Hotkey Window. You can choose
-a shortcut key, in my case &#x2303;&#x2318;O. Since it&#8217;s a system-wide hotkey, choose something that doesn&#8217;t conflict with apps you use.
+<p>The magic glue for all of this is the key-binding option in iTerm. Go to iTerm Preferences > Profiles > Hotkey Window. You can choose
+a shortcut key, in my case &#x2303;&#x2318;O, to trigger the app. Since it&#8217;s a system-wide hotkey, choose something that doesn&#8217;t conflict with apps you use.
 &#x2303;&#x2318;Z is a really bad choice if you use Photoshop ;)</p>
 
 <p><img src="http://nathancahill.github.com/images/window.png"></p>
 
 <p>Once you have the HotKey set up in iTerm, set up a Global gesture in BetterTouchTool. I&#8217;m a fan of the three-finger swipe down, it feels natural and doesn&#8217;t
-conflict with Spaces for me, since I&#8217;m still rocking Snow Leopard. Obviously hook it up to the same short cut key you used in iTerm. Now,
-you should be able to swipe to get a terminal window.</p>
+conflict with Spaces for me, since I&#8217;m still rocking Snow Leopard. Obviously hook it up to the same shortcut key you used in iTerm. Now,
+you should be able to swipe to get a command prompt.</p>
 
 <p>But how about sending it back up? It feels natural to swipe back up, but there&#8217;s no way to trigger that in iTerm. So, fellow hacker,
 add a second gesture, the three-finger swipe up, and bind it to &#x2318;+Tab. This simply switches back to the original app
