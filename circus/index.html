@@ -1,0 +1,281 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Circus, Nginx and Websockets - Nathan Cahill</title>
+	<meta name="author" content="Nathan Cahill">
+
+	
+	<meta name="description" content="Looking for a high performance, powerfull process manager for a Python project I&#8217;m working on, I stumbled on Circus on this excellent benchmark &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Nathan Cahill" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="//use.typekit.net/dqs7xdv.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Nathan Cahill</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="http://www.nathancahill.com">Website + Portfolio</a></li>
+	<li><a href="https://github.com/nathancahill">Github</a></li>
+	
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="http://www.nathancahill.com">Website + Portfolio</a></li>
+	<li><a href="https://github.com/nathancahill">Github</a></li>
+	
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:nathancahill.github.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:nathancahill.github.com">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-24T03:28:00-04:00" pubdate data-updated="true">Sep 24<span>th</span>, 2012</time></div>
+	<h1 class="title">Circus, Nginx and Websockets</h1>
+	<div class="entry-content"><p>Looking for a high performance, powerfull process manager for a Python project I&#8217;m working on, I stumbled on <a href="http://circus.io/">Circus</a> on this <a href="http://blog.ziade.org/2012/06/28/wgsi-web-servers-bench/">excellent benchmark blog post</a>. After running my own benchmark tests, I agree that the <a href="http://circus.io/">Circus</a> + <a href="http://chaussette.readthedocs.org">Chaussette</a> + <a href="http://meinheld.org/">Meinheld</a> stack is the way to go. High concurrency, fast response time, and socket support are the features that pulled me in. I&#8217;m switching off of <a href="http://supervisord.org/">Supervisord</a>, because: a) Circus integrates directly with <a href="http://zeromq.org/">ZeroMQ</a>, and b) <a href="http://gunicorn.org/">Gunicorn</a> + Supervisord requires two levels of process management: Supervisor controls gunicorn, and gunicorn in turn watching it&#8217;s own worker processes. Circus keeps everything on the same level.</p>
+
+<p><a href="http://circus.readthedocs.org/">circus.readthedocs.org</a> has excellent documentation for getting started with Circus. I did run in to a couple caveats though:</p>
+
+<h2>Circus doesn&#8217;t start on boot</h2>
+
+<p>I started testing Circus in the command line by running <code>circusd circus.ini</code>. I quickly switched to running it as a service in Upstart, using this <code>etc/init/circus.conf</code> file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">start</span> <span class="n">on</span> <span class="n">filesystem</span> <span class="ow">and</span> <span class="n">net</span><span class="o">-</span><span class="n">device</span><span class="o">-</span><span class="n">up</span> <span class="n">IFACE</span><span class="o">=</span><span class="n">lo</span>
+</span><span class='line'><span class="k">exec</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">circusd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">circus</span><span class="o">.</span><span class="n">ini</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This script just waits for the file system and networking to become available, then it runs <code>circusd</code> with my config file in <code>/etc/circus.ini</code>. Easy enough.</p>
+
+<h2>Getting Circus workers to work with virtual environments</h2>
+
+<p>Although Circus workers have awesome properties like env, copy_env and copy_path (which all work great when running from a local folder), this falls apart when starting the daemon from Upstart. I looked at my $PATH variable in an active environment, and copied it into the worker config:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">env</span> <span class="o">=</span> <span class="n">PATH</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">sbin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="n">sbin</span><span class="p">:</span><span class="o">/</span><span class="nb">bin</span><span class="p">,</span><span class="n">VIRTUAL_ENV</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">venv</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Circus Web Console behind Nginx with Sockets</h2>
+
+<p>Circus has a sweet web console to manage processes and workers. By default, it runs on port 8080, and uses websockets to push stats on CPU, memory and socket reads for each running process. The web console should never be publicly available, it allows arbitrary commands to be executed on the server. The preferred way to password protect the console is to use Nginx like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">server</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">listen</span>  <span class="mi">8001</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">location</span> <span class="o">~/</span><span class="n">media</span><span class="o">/*</span><span class="p">(</span><span class="o">.</span><span class="n">jpg</span><span class="o">|.</span><span class="n">css</span><span class="o">|.</span><span class="n">js</span><span class="p">)</span><span class="err">$</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">alias</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">circus</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">location</span> <span class="o">/</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">proxy_set_header</span> <span class="n">X</span><span class="o">-</span><span class="n">Forwarded</span><span class="o">-</span><span class="n">For</span> <span class="err">$</span><span class="n">proxy_add_x_forwarded_for</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">proxy_set_header</span> <span class="n">Host</span> <span class="err">$</span><span class="n">http_host</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">proxy_redirect</span> <span class="n">off</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">proxy_pass</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">8080</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">auth_basic</span>            <span class="s">&quot;Restricted&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">auth_basic_user_file</span>  <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">htpasswd</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I have the web console process listening on 8080: it&#8217;s serving both the website and the socket connection. Notice the issue? Nginx <a href="https://github.com/LearnBoost/socket.io/wiki/Nginx-and-socket.io">doesn&#8217;t support websockets</a>! So I&#8217;m running Nginx on port 8001, and the web console processs on 8080. And this is where Varnish comes in: Varnish is a caching proxy, but I&#8217;ll just use it to multiplex port 8002 to two seperate backends. If the connection is a websocket, route it directly to 8080. If it&#8217;s the website, switch the backend to Nginx on port 8001:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">backend</span> <span class="n">default</span> <span class="p">{</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="s">&quot;127.0.0.1&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="s">&quot;8001&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">backend</span> <span class="n">socket</span> <span class="p">{</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="s">&quot;127.0.0.1&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="s">&quot;8080&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">connect_timeout</span> <span class="o">=</span> <span class="mi">1</span><span class="n">s</span><span class="p">;</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">first_byte_timeout</span> <span class="o">=</span> <span class="mi">2</span><span class="n">s</span><span class="p">;</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">between_bytes_timeout</span> <span class="o">=</span> <span class="mi">60</span><span class="n">s</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">sub</span> <span class="n">vcl_pipe</span> <span class="p">{</span>
+</span><span class='line'>     <span class="k">if</span> <span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">upgrade</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>         <span class="nb">set</span> <span class="n">bereq</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">upgrade</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">upgrade</span><span class="p">;</span>
+</span><span class='line'>     <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">sub</span> <span class="n">vcl_recv</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">Upgrade</span> <span class="o">~</span> <span class="s">&quot;(?i)websocket&quot;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">set</span> <span class="n">req</span><span class="o">.</span><span class="n">backend</span> <span class="o">=</span> <span class="n">socket</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">return</span> <span class="p">(</span><span class="n">pipe</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2012
+
+    Nathan Cahill
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'nathancahill';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://nathancahill.github.com/circus/';
+        var disqus_url = 'http://nathancahill.github.com/circus/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-29405367-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>
