@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2012-10-09T12:10:08-04:00</updated>
+  <updated>2012-10-09T12:21:00-04:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -14,13 +14,11 @@
 
   
   <entry>
-    <title type="html"><![CDATA[The peril of online backups]]></title>
+    <title type="html"><![CDATA[The Peril of Online Backups: How Backblaze Lost my most Important Files]]></title>
     <link href="http://nathancahill.github.com/the-peril-of-online-backups/"/>
     <updated>2012-10-09T00:25:00-04:00</updated>
     <id>http://nathancahill.github.com/the-peril-of-online-backups</id>
-    <content type="html"><![CDATA[<h2>How Backblaze lost my most important files</h2>
-
-<p>About 6 months ago, I heard about Backblaze from some friends. Backblaze is a startup that offers <strong>unlimited, automatic backups of your computer to the cloud</strong>, for $5 a month.
+    <content type="html"><![CDATA[<p>About 6 months ago, I heard about Backblaze from some friends. Backblaze is a startup that offers <strong>unlimited, automatic backups of your computer to the cloud</strong>, for $5 a month.
 Sound to good to be true? It might be.</p>
 
 <p>Everything was going great. The Backblaze website and app are well done and easy to use. It sits in your menu bar and quietly uploads your entire hard drive to the cloud.
