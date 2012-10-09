@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2012-10-09T12:21:00-04:00</updated>
+  <updated>2012-10-09T13:54:00-04:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -12,42 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[The Peril of Online Backups: How Backblaze Lost my most Important Files]]></title>
-    <link href="http://nathancahill.github.com/the-peril-of-online-backups/"/>
-    <updated>2012-10-09T00:25:00-04:00</updated>
-    <id>http://nathancahill.github.com/the-peril-of-online-backups</id>
-    <content type="html"><![CDATA[<p>About 6 months ago, I heard about Backblaze from some friends. Backblaze is a startup that offers <strong>unlimited, automatic backups of your computer to the cloud</strong>, for $5 a month.
-Sound to good to be true? It might be.</p>
-
-<p>Everything was going great. The Backblaze website and app are well done and easy to use. It sits in your menu bar and quietly uploads your entire hard drive to the cloud.
-At least, that&#8217;s what <a href="http://www.backblaze.com/remote-backup-everything.html">they claim</a> (obviously, this excludes operating system files, applications and podcasts, which is reasonable).</p>
-
-<p>It wasn&#8217;t until my computer bit the dust that I found out what was really happening. This was the first time that I didn&#8217;t get that: <em>&#8220;Crap, I just lost a bunch of stuff&#8221;</em> chills when my hard drive
-didn&#8217;t spin up. I knew I had a 100% up-to-date backup, stored safely on a remote server. Until I downloaded the backup. Then I got the chills indeed:</p>
-
-<p>My work revolves around code, and most of the files on my computer tend to be that. Python code, to be exact. So, I was astonished when, after waiting for 5 hours for my backup to download,
-<strong>every single .py file in the backup had vanished.</strong></p>
-
-<p>Every single project was an empty directory structure, without a single file in them. My work had been nuked in the most literal figurative sense. But it didn&#8217;t stop there. I poked around a little more
-and <strong>every CSS, JS and HTML file was gone as well</strong>. Is it too much to expect a backup service to back up my entire home folder? It wasn&#8217;t like I was coding in /var/www or something!</p>
-
-<p>Now, I know better than to trust a single service with my source code. Every line of code I&#8217;ve written is sitting in a Github repo or a gitosis server somewhere. Nothing lost right? Wrong again!
-Guess what other folder Backblaze doesn&#8217;t backup? My <strong>.ssh folder</strong>. The one with the unrecoverable key pairs to servers on Amazon EC2 and elsewhere. This would have been a tough blow.
-Fortunately, I keep a manual backup of these on an encrypted hard drive. Worst case scenairo is a couple hour drive to my parents house to recover them.</p>
-
-<p>One of my other important files is my <strong>1Password backup</strong>. I love 1Password&#8217;s Generate Password feature and use it frequently. I keep a copy of the daily backup file in my Home folder and keep it in sync with a shell script. But Backblaze didn&#8217;t back it up. It&#8217;s simply not there. This is the only file that I lost completely, and the one that will cost me the most work to get back. Password resets are no fun.</p>
-
-<p>I&#8217;m upset. Not about the lost or hard to recover files, or because I paid $5 a month for a useless service. I&#8217;m upset about the lack of
-transparency on Backblaze&#8217;s part. Cloud services are built on a certain level of trust. Not owning your own hardware, networks and firewalls means trusting a third party
-to provide adequate security, integrity and transparency.</p>
-
-<p>Out of all startups, Backblaze is something I want to support. They&#8217;re a bootstrapped startup (until recently), and they&#8217;ve contributed some
-<a href="http://blog.backblaze.com/2011/07/20/petabytes-on-a-budget-v2-0revealing-more-secrets/">really cool things</a> to the open source community. Hopefully they can get these issues
-figured out, or at least be more straight forward about what they are actually backing up. Until then I&#8217;m back to using rsync.</p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hackers and Hustlers: Where next?]]></title>
