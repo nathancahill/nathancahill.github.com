@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2012-10-12T15:01:52-04:00</updated>
+  <updated>2012-10-12T19:22:25-04:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -38,7 +38,7 @@ for the disk. For a 2GB disk: 2GB = 2147483648 bytes. 2147483648 / 512 = 4194304
 you&#8217;ll need to run the command every time you restart the computer. So drop it
 in an Automator app and add it to your Startup Items.</p>
 
-<p><img src="http://f.cl.ly/items/1f240e2J0E2v1o2z3c0j/Screen%20Shot%202012-10-12%20at%202.36.23%20PM.png"></p>
+<p><img src="http://nathancahill.github.com/images/automator.png"></p>
 
 <p>Some other cool things you can do with a very fast, but temporary disk:</p>
 
