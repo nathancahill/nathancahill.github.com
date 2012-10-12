@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2012-10-09T13:54:00-04:00</updated>
+  <updated>2012-10-12T15:01:52-04:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -12,6 +12,47 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Photoshop In-memory Scratch Disk]]></title>
+    <link href="http://nathancahill.github.com/photoshop-in-memory-scratch-disk/"/>
+    <updated>2012-10-12T05:51:00-04:00</updated>
+    <id>http://nathancahill.github.com/photoshop-in-memory-scratch-disk</id>
+    <content type="html"><![CDATA[<p>After getting a new Macbook Pro with 16GB of RAM (<a href="http://www.newegg.com/Product/Product.aspx?Item=N82E16820231576">G.Skill</a>, not from Apple, highly recommended),
+I starting looking for ways to put it to use. One of my favorite hacks is
+mounting a virtual disk with a portion of the RAM. Once you create a RAM disk, you
+can take advantage of the <a href="http://en.wikipedia.org/wiki/DDR3_SDRAM#Modules">theoretical 10GB/s read/write speed</a> to RAM.
+Everything stored in the RAM is temporary and while disappear on unmount or reboot.</p>
+
+<p>It&#8217;s pretty simple to do, just run this command in the Terminal:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ diskutil erasevolume HFS+ "ramdisk" `hdiutil attach -nomount ram://4194304`
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The number at the end of the command is the number of 512 byte sectors
+for the disk. For a 2GB disk: 2GB = 2147483648 bytes. 2147483648 / 512 = 4194304 disk sectors.</p>
+
+<p>After that, you can set Photoshop&#8217;s scratch disk to ramdisk. One caveat is that
+you&#8217;ll need to run the command every time you restart the computer. So drop it
+in an Automator app and add it to your Startup Items.</p>
+
+<p><img src="http://f.cl.ly/items/1f240e2J0E2v1o2z3c0j/Screen%20Shot%202012-10-12%20at%202.36.23%20PM.png"></p>
+
+<p>Some other cool things you can do with a very fast, but temporary disk:</p>
+
+<ul>
+<li>Store a working copy of large files for instant access</li>
+<li>Run <a href="http://www.freesmug.org/portableapps">portable apps</a> entirely in the memory</li>
+<li>Get a small linux distro like <a href="http://puppylinux.org/main/Overview%20and%20Getting%20Started.htm">Puppy Linux</a>
+and running it from a VM. Entire operating system in memory.</li>
+</ul>
+
+
+<p>Have another cool use for an in-memory disk? Comment below or tweet me <a href="https://twitter.com/nathancahill">@nathancahill</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Hackers and Hustlers: Where next?]]></title>

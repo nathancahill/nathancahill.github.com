@@ -3,11 +3,12 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Blog Archives - Nathan Cahill</title>
+	<title>Photoshop In-memory Scratch Disk - Nathan Cahill</title>
 	<meta name="author" content="Nathan Cahill">
 
 	
-	<meta name="description" content="2012 Photoshop In-memory Scratch Disk Oct 12 Hackers and Hustlers: Where next? Sep 24 Circus, Nginx and Websockets Sep 24 FontPrep: The missing CSS3 &hellip;">
+	<meta name="description" content="After getting a new Macbook Pro with 16GB of RAM (G.Skill, not from Apple, highly recommended),
+I starting looking for ways to put it to use. One of &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -74,150 +75,76 @@
 	
 		
 	
-	<div id="content" class="inner">
-	
+	<div id="content" class="inner"><article class="post">
+	<div class="date">
 
 
-	
-	
-	<section class="archives"><h1 class="year">2012</h1>
 
-<article>
-	<h1 class="title"><a href="/photoshop-in-memory-scratch-disk/">Photoshop In-memory Scratch Disk</a></h1>
-	<div class="meta">
-		<span class="date">Oct 12</span>
-		<span class="tags">
 
-</span>
-	    
-	</div>
+
+
+
+
+  
+
+
+<time datetime="2012-10-12T05:51:00-04:00" pubdate data-updated="true">Oct 12<span>th</span>, 2012</time></div>
+	<h1 class="title">Photoshop In-memory Scratch Disk</h1>
+	<div class="entry-content"><p>After getting a new Macbook Pro with 16GB of RAM (<a href="http://www.newegg.com/Product/Product.aspx?Item=N82E16820231576">G.Skill</a>, not from Apple, highly recommended),
+I starting looking for ways to put it to use. One of my favorite hacks is
+mounting a virtual disk with a portion of the RAM. Once you create a RAM disk, you
+can take advantage of the <a href="http://en.wikipedia.org/wiki/DDR3_SDRAM#Modules">theoretical 10GB/s read/write speed</a> to RAM.
+Everything stored in the RAM is temporary and while disappear on unmount or reboot.</p>
+
+<p>It&#8217;s pretty simple to do, just run this command in the Terminal:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ diskutil erasevolume HFS+ "ramdisk" `hdiutil attach -nomount ram://4194304`
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The number at the end of the command is the number of 512 byte sectors
+for the disk. For a 2GB disk: 2GB = 2147483648 bytes. 2147483648 / 512 = 4194304 disk sectors.</p>
+
+<p>After that, you can set Photoshop&#8217;s scratch disk to ramdisk. One caveat is that
+you&#8217;ll need to run the command every time you restart the computer. So drop it
+in an Automator app and add it to your Startup Items.</p>
+
+<p><img src="http://f.cl.ly/items/1f240e2J0E2v1o2z3c0j/Screen%20Shot%202012-10-12%20at%202.36.23%20PM.png"></p>
+
+<p>Some other cool things you can do with a very fast, but temporary disk:</p>
+
+<ul>
+<li>Store a working copy of large files for instant access</li>
+<li>Run <a href="http://www.freesmug.org/portableapps">portable apps</a> entirely in the memory</li>
+<li>Get a small linux distro like <a href="http://puppylinux.org/main/Overview%20and%20Getting%20Started.htm">Puppy Linux</a>
+and running it from a VM. Entire operating system in memory.</li>
+</ul>
+
+
+<p>Have another cool use for an in-memory disk? Comment below or tweet me <a href="https://twitter.com/nathancahill">@nathancahill</a>.</p>
+</div>
 </article>
 
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
 	
-
-
-<article>
-	<h1 class="title"><a href="/hackers-and-hustlers-where-next/">Hackers and Hustlers: Where next?</a></h1>
-	<div class="meta">
-		<span class="date">Sep 24</span>
-		<span class="tags">
-
-</span>
-	    
-	</div>
-</article>
-
 	
-
-
-<article>
-	<h1 class="title"><a href="/circus/">Circus, Nginx and Websockets</a></h1>
-	<div class="meta">
-		<span class="date">Sep 24</span>
-		<span class="tags">
-
-</span>
-	    
-	</div>
-</article>
-
+	<a class="addthis_button_tweet"></a>
 	
-
-
-<article>
-	<h1 class="title"><a href="/fontprep-the-missing-css3-font-generator-for-mac-os-x/">FontPrep: The missing CSS3 font generator for Mac OS X</a></h1>
-	<div class="meta">
-		<span class="date">Sep 19</span>
-		<span class="tags">
-
-</span>
-	    
-	</div>
-</article>
-
 	
-
-
-<article>
-	<h1 class="title"><a href="/iterm-plus-bettertouchtool/">iTerm + BetterTouchTool</a></h1>
-	<div class="meta">
-		<span class="date">Sep 19</span>
-		<span class="tags">
-
-</span>
-	    
+	<a class="addthis_counter addthis_pill_style"></a>
 	</div>
-</article>
-
-	
-
-
-<article>
-	<h1 class="title"><a href="/make-requests-cache-play-nicely-with-heroku/">Make Requests-Cache play nicely with Heroku</a></h1>
-	<div class="meta">
-		<span class="date">Sep  9</span>
-		<span class="tags">
-
-</span>
-	    
-	</div>
-</article>
-
-	
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
 
 
-<article>
-	<h1 class="title"><a href="/oauth-with-twitter-and-python-flask/">OAuth with Twitter and Python Flask</a></h1>
-	<div class="meta">
-		<span class="date">Sep  7</span>
-		<span class="tags">
 
-</span>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h1 class="title"><a href="/film-canon-ae-1-program/">Film: Canon AE-1 Program</a></h1>
-	<div class="meta">
-		<span class="date">Aug 28</span>
-		<span class="tags">
-
-</span>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h1 class="title"><a href="/startup-in-dot-dot-dot-latin-america/">Startup in&#8230; Latin America?</a></h1>
-	<div class="meta">
-		<span class="date">Aug 16</span>
-		<span class="tags">
-
-</span>
-	    
-	</div>
-</article>
-
-	
-
-
-<article>
-	<h1 class="title"><a href="/on-extracting-an-element-from-a-web-page-with-css-styles/">On extracting an element from a web page with CSS styles</a></h1>
-	<div class="meta">
-		<span class="date">Jun 16</span>
-		<span class="tags">
-
-</span>
-	    
-	</div>
-</article>
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
 </div>
 	<footer id="footer" class="inner">Copyright &copy; 2012
 
@@ -237,7 +164,10 @@
       var disqus_shortname = 'nathancahill';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://nathancahill.github.com/photoshop-in-memory-scratch-disk/';
+        var disqus_url = 'http://nathancahill.github.com/photoshop-in-memory-scratch-disk/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
