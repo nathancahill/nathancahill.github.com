@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2012-10-12T19:22:25-04:00</updated>
+  <updated>2012-10-13T03:42:19-04:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -12,6 +12,76 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Pro tip: Manage cron like a boss]]></title>
+    <link href="http://nathancahill.github.com/pro-tip-manage-cron-like-a-boss/"/>
+    <updated>2012-10-13T02:39:00-04:00</updated>
+    <id>http://nathancahill.github.com/pro-tip-manage-cron-like-a-boss</id>
+    <content type="html"><![CDATA[<p>Managing cron can be a little intimidating to the uninitiated. How do you
+load jobs in to cron? How do you know what&#8217;s running? How can you check on each
+job&#8217;s status? It&#8217;s a pity that the first tutorial result on Google for cron was
+written in 1999. A lot of what it recommends is outdated. For the most part, you
+should never have to mess with /etc/crontab. This is the system crontab, don&#8217;t
+touch it unless you know what you&#8217;re doing.</p>
+
+<h2>Easiest way to load new jobs</h2>
+
+<p>Create a file called .cron in your home folder. Edit the list of cron jobs
+in this file, then load it in to cron with the crontab command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ crontab ~/.cron</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note: This clears all existing jobs. Back them up first with the command below.</p>
+
+<h2>Easiest way to see what&#8217;s already loaded</h2>
+
+<p>If you want to check what jobs are already loaded in cron, or generate a .cron
+file for the first time, run:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ crontab -l</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Optionally output this to the .cron file:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ crontab -l &gt; ~/.cron</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Easiest way to check a job&#8217;s status</h2>
+
+<p><img class="right" src="https://deadmanssnitch.com/assets/screenshot-800.png" width="600" height="372"></p>
+
+<p>With cron&#8217;s default settings on most machines, this isn&#8217;t an easy one. On
+Ubuntu, cron messages are logged to the /var/log/syslog file. There&#8217;s ways to
+set up logs for each cron job, but if you just want a simple way to make sure
+your nightly backups are running, check out
+<a href="https://deadmanssnitch.com/">Dead Man&#8217;s Snitch</a>.</p>
+
+<p>DMS is an awesome web app that shows the status of each of your cron jobs, and
+how long ago it last ran. It does cost $19/month for more than one job, but if
+you aren&#8217;t handy with the command line, it&#8217;s worth it to keep an eye on your
+cron jobs.</p>
+
+<p>All you have to do is add a curl request to a unique URL after each cron job
+runs. Dead simple:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ run_backup && curl https://nosnch.in/34ljkh3d</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you have any questions about Dead Man&#8217;s Snitch, send a tweet to
+<a href="https://twitter.com/DeadMansSnitch">@DeadMansSnitch</a>. They are awesome.
+If you have questions about cron, cron jobs, or anything else, feel free to
+tweet me <a href="https://twitter.com/nathancahill">@nathancahill</a>.</p>
+
+<p>Cron is a powerful tool, and once you understand how it works, it&#8217;s easy to use.
+Now, go ahead and cron ALL OF THE THINGS!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Photoshop In-memory Scratch Disk]]></title>
@@ -22,7 +92,7 @@
 I starting looking for ways to put it to use. One of my favorite hacks is
 mounting a virtual disk with a portion of the RAM. Once you create a RAM disk, you
 can take advantage of the <a href="http://en.wikipedia.org/wiki/DDR3_SDRAM#Modules">theoretical 10GB/s read/write speed</a> to RAM.
-Everything stored in the RAM is temporary and while disappear on unmount or reboot.</p>
+Everything stored in the RAM is temporary and will disappear on unmount or reboot.</p>
 
 <p>It&#8217;s pretty simple to do, just run this command in the Terminal:</p>
 

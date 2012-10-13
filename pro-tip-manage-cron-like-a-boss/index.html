@@ -3,12 +3,12 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Photoshop In-memory Scratch Disk - Nathan Cahill</title>
+	<title>Pro tip: Manage cron like a boss - Nathan Cahill</title>
 	<meta name="author" content="Nathan Cahill">
 
 	
-	<meta name="description" content="After getting a new Macbook Pro with 16GB of RAM (G.Skill, not from Apple, highly recommended),
-I starting looking for ways to put it to use. One of &hellip;">
+	<meta name="description" content="Managing cron can be a little intimidating to the uninitiated. How do you
+load jobs in to cron? How do you know what&#8217;s running? How can you &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -88,41 +88,70 @@ I starting looking for ways to put it to use. One of &hellip;">
   
 
 
-<time datetime="2012-10-12T05:51:00-04:00" pubdate data-updated="true">Oct 12<span>th</span>, 2012</time></div>
-	<h1 class="title">Photoshop In-memory Scratch Disk</h1>
-	<div class="entry-content"><p>After getting a new Macbook Pro with 16GB of RAM (<a href="http://www.newegg.com/Product/Product.aspx?Item=N82E16820231576">G.Skill</a>, not from Apple, highly recommended),
-I starting looking for ways to put it to use. One of my favorite hacks is
-mounting a virtual disk with a portion of the RAM. Once you create a RAM disk, you
-can take advantage of the <a href="http://en.wikipedia.org/wiki/DDR3_SDRAM#Modules">theoretical 10GB/s read/write speed</a> to RAM.
-Everything stored in the RAM is temporary and will disappear on unmount or reboot.</p>
+<time datetime="2012-10-13T02:39:00-04:00" pubdate data-updated="true">Oct 13<span>th</span>, 2012</time></div>
+	<h1 class="title">Pro Tip: Manage Cron Like a Boss</h1>
+	<div class="entry-content"><p>Managing cron can be a little intimidating to the uninitiated. How do you
+load jobs in to cron? How do you know what&#8217;s running? How can you check on each
+job&#8217;s status? It&#8217;s a pity that the first tutorial result on Google for cron was
+written in 1999. A lot of what it recommends is outdated. For the most part, you
+should never have to mess with /etc/crontab. This is the system crontab, don&#8217;t
+touch it unless you know what you&#8217;re doing.</p>
 
-<p>It&#8217;s pretty simple to do, just run this command in the Terminal:</p>
+<h2>Easiest way to load new jobs</h2>
+
+<p>Create a file called .cron in your home folder. Edit the list of cron jobs
+in this file, then load it in to cron with the crontab command:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ diskutil erasevolume HFS+ "ramdisk" `hdiutil attach -nomount ram://4194304`
-</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ crontab ~/.cron</span></code></pre></td></tr></table></div></figure>
 
 
-<p>The number at the end of the command is the number of 512 byte sectors
-for the disk. For a 2GB disk: 2GB = 2147483648 bytes. 2147483648 / 512 = 4194304 disk sectors.</p>
+<p>Note: This clears all existing jobs. Back them up first with the command below.</p>
 
-<p>After that, you can set Photoshop&#8217;s scratch disk to ramdisk. One caveat is that
-you&#8217;ll need to run the command every time you restart the computer. So drop it
-in an Automator app and add it to your Startup Items.</p>
+<h2>Easiest way to see what&#8217;s already loaded</h2>
 
-<p><img src="http://nathancahill.github.com/images/automator.png"></p>
+<p>If you want to check what jobs are already loaded in cron, or generate a .cron
+file for the first time, run:</p>
 
-<p>Some other cool things you can do with a very fast, but temporary disk:</p>
-
-<ul>
-<li>Store a working copy of large files for instant access</li>
-<li>Run <a href="http://www.freesmug.org/portableapps">portable apps</a> entirely in the memory</li>
-<li>Get a small linux distro like <a href="http://puppylinux.org/main/Overview%20and%20Getting%20Started.htm">Puppy Linux</a>
-and running it from a VM. Entire operating system in memory.</li>
-</ul>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ crontab -l</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Have another cool use for an in-memory disk? Comment below or tweet me <a href="https://twitter.com/nathancahill">@nathancahill</a>.</p>
+<p>Optionally output this to the .cron file:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ crontab -l &gt; ~/.cron</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Easiest way to check a job&#8217;s status</h2>
+
+<p><img class="right" src="https://deadmanssnitch.com/assets/screenshot-800.png" width="600" height="372"></p>
+
+<p>With cron&#8217;s default settings on most machines, this isn&#8217;t an easy one. On
+Ubuntu, cron messages are logged to the /var/log/syslog file. There&#8217;s ways to
+set up logs for each cron job, but if you just want a simple way to make sure
+your nightly backups are running, check out
+<a href="https://deadmanssnitch.com/">Dead Man&#8217;s Snitch</a>.</p>
+
+<p>DMS is an awesome web app that shows the status of each of your cron jobs, and
+how long ago it last ran. It does cost $19/month for more than one job, but if
+you aren&#8217;t handy with the command line, it&#8217;s worth it to keep an eye on your
+cron jobs.</p>
+
+<p>All you have to do is add a curl request to a unique URL after each cron job
+runs. Dead simple:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ run_backup && curl https://nosnch.in/34ljkh3d</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you have any questions about Dead Man&#8217;s Snitch, send a tweet to
+<a href="https://twitter.com/DeadMansSnitch">@DeadMansSnitch</a>. They are awesome.
+If you have questions about cron, cron jobs, or anything else, feel free to
+tweet me <a href="https://twitter.com/nathancahill">@nathancahill</a>.</p>
+
+<p>Cron is a powerful tool, and once you understand how it works, it&#8217;s easy to use.
+Now, go ahead and cron ALL OF THE THINGS!</p>
 </div>
 </article>
 
@@ -165,8 +194,8 @@ and running it from a VM. Entire operating system in memory.</li>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://nathancahill.github.com/photoshop-in-memory-scratch-disk/';
-        var disqus_url = 'http://nathancahill.github.com/photoshop-in-memory-scratch-disk/';
+        var disqus_identifier = 'http://nathancahill.github.com/pro-tip-manage-cron-like-a-boss/';
+        var disqus_url = 'http://nathancahill.github.com/pro-tip-manage-cron-like-a-boss/';
         var disqus_script = 'embed.js';
       
     (function () {

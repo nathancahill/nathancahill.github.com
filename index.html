@@ -7,8 +7,8 @@
 	<meta name="author" content="Nathan Cahill">
 
 	
-	<meta name="description" content="After getting a new Macbook Pro with 16GB of RAM (G.Skill, not from Apple, highly recommended),
-I starting looking for ways to put it to use. One of &hellip;">
+	<meta name="description" content="Managing cron can be a little intimidating to the uninitiated. How do you
+load jobs in to cron? How do you know what&#8217;s running? How can you &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -91,6 +91,91 @@ I starting looking for ways to put it to use. One of &hellip;">
   
 
 
+<time datetime="2012-10-13T02:39:00-04:00" pubdate data-updated="true">Oct 13<span>th</span>, 2012</time></div>
+	<h1 class="title"><a href="/pro-tip-manage-cron-like-a-boss/">Pro Tip: Manage Cron Like a Boss</a></h1>
+	<div class="entry-content">
+		<p>Managing cron can be a little intimidating to the uninitiated. How do you
+load jobs in to cron? How do you know what&#8217;s running? How can you check on each
+job&#8217;s status? It&#8217;s a pity that the first tutorial result on Google for cron was
+written in 1999. A lot of what it recommends is outdated. For the most part, you
+should never have to mess with /etc/crontab. This is the system crontab, don&#8217;t
+touch it unless you know what you&#8217;re doing.</p>
+
+<h2>Easiest way to load new jobs</h2>
+
+<p>Create a file called .cron in your home folder. Edit the list of cron jobs
+in this file, then load it in to cron with the crontab command:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ crontab ~/.cron</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note: This clears all existing jobs. Back them up first with the command below.</p>
+
+<h2>Easiest way to see what&#8217;s already loaded</h2>
+
+<p>If you want to check what jobs are already loaded in cron, or generate a .cron
+file for the first time, run:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ crontab -l</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Optionally output this to the .cron file:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ crontab -l &gt; ~/.cron</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Easiest way to check a job&#8217;s status</h2>
+
+<p><img class="right" src="https://deadmanssnitch.com/assets/screenshot-800.png" width="600" height="372"></p>
+
+<p>With cron&#8217;s default settings on most machines, this isn&#8217;t an easy one. On
+Ubuntu, cron messages are logged to the /var/log/syslog file. There&#8217;s ways to
+set up logs for each cron job, but if you just want a simple way to make sure
+your nightly backups are running, check out
+<a href="https://deadmanssnitch.com/">Dead Man&#8217;s Snitch</a>.</p>
+
+<p>DMS is an awesome web app that shows the status of each of your cron jobs, and
+how long ago it last ran. It does cost $19/month for more than one job, but if
+you aren&#8217;t handy with the command line, it&#8217;s worth it to keep an eye on your
+cron jobs.</p>
+
+<p>All you have to do is add a curl request to a unique URL after each cron job
+runs. Dead simple:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ run_backup && curl https://nosnch.in/34ljkh3d</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you have any questions about Dead Man&#8217;s Snitch, send a tweet to
+<a href="https://twitter.com/DeadMansSnitch">@DeadMansSnitch</a>. They are awesome.
+If you have questions about cron, cron jobs, or anything else, feel free to
+tweet me <a href="https://twitter.com/nathancahill">@nathancahill</a>.</p>
+
+<p>Cron is a powerful tool, and once you understand how it works, it&#8217;s easy to use.
+Now, go ahead and cron ALL OF THE THINGS!</p>
+
+		
+		
+	</div>
+</article>
+
+
+    <article class="post">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
 <time datetime="2012-10-12T05:51:00-04:00" pubdate data-updated="true">Oct 12<span>th</span>, 2012</time></div>
 	<h1 class="title"><a href="/photoshop-in-memory-scratch-disk/">Photoshop In-memory Scratch Disk</a></h1>
 	<div class="entry-content">
@@ -98,7 +183,7 @@ I starting looking for ways to put it to use. One of &hellip;">
 I starting looking for ways to put it to use. One of my favorite hacks is
 mounting a virtual disk with a portion of the RAM. Once you create a RAM disk, you
 can take advantage of the <a href="http://en.wikipedia.org/wiki/DDR3_SDRAM#Modules">theoretical 10GB/s read/write speed</a> to RAM.
-Everything stored in the RAM is temporary and while disappear on unmount or reboot.</p>
+Everything stored in the RAM is temporary and will disappear on unmount or reboot.</p>
 
 <p>It&#8217;s pretty simple to do, just run this command in the Terminal:</p>
 
@@ -713,178 +798,10 @@ function.</p>
 	</div>
 </article>
 
-
-    <article class="post">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-06-16T08:15:00-04:00" pubdate data-updated="true">Jun 16<span>th</span>, 2012</time></div>
-	<h1 class="title"><a href="/on-extracting-an-element-from-a-web-page-with-css-styles/">On Extracting an Element From a Web Page With CSS Styles</a></h1>
-	<div class="entry-content">
-		<p>The goal: to extract an element from a web page and display it independently from it&#8217;s original website.</p>
-
-<p>Note: I initially toyed with running this whole process server-side, and it still may be the more efficient way to to this. This is extraordinarily difficult though, you will soon see why.</p>
-
-<p>First, we fetch the complete web page from our target site. For example, news.google.com. We then dump the web page into an invisible div.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="cp">&lt;?php</span>
-</span><span class='line'><span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
-</span><span class='line'><span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="s1">&#39;http://news.google.com/&#39;</span><span class="p">);</span>
-</span><span class='line'><span class="nv">$html</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$ch</span><span class="p">);</span>
-</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;div style=&quot;display:none;&quot;&gt;</span>
-</span><span class='line'><span class="x">    </span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$html</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="x"></span>
-</span><span class='line'><span class="x">&lt;/div&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Our target element is the Recent News box on the right of the page. The id is &#8216;s_BREAKING_NEWS_BOX&#8217;. Extracting the HTML is easy enough with jQuery:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#s_BREAKING_NEWS_BOX&#39;</span><span class="p">).</span><span class="nx">clone</span><span class="p">()).</span><span class="nx">remove</span><span class="p">().</span><span class="nx">html</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If we were to just output the HTML at this point, we would get text with default browser styles. We need to copy the computed CSS styles from the original rendering to our new element. Firefox, Chrome and Safari use getComputedStyle, IE uses currentStyle.</p>
-
-<p>Here&#8217;s our JavaScript function to do just that:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">getPropValue</span><span class="p">(</span><span class="nx">ele</span><span class="p">,</span> <span class="nx">styleProp</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="nx">ele</span><span class="p">.</span><span class="nx">currentStyle</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="nx">ele</span><span class="p">.</span><span class="nx">currentStyle</span><span class="p">[</span><span class="nx">styleProp</span><span class="p">];</span>
-</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">getComputedStyle</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">defaultView</span><span class="p">.</span><span class="nx">getComputedStyle</span><span class="p">(</span><span class="nx">ele</span><span class="p">,</span> <span class="kc">null</span><span class="p">).</span><span class="nx">getPropertyValue</span><span class="p">(</span><span class="nx">styleProp</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nx">y</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This function requires an element, and the CSS property that we want to grab. So we can define an array of properties we want to copy, then loop through these properties to get the entire style for the element.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">styles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="s2">&quot;font-family&quot;</span><span class="p">,</span> <span class="s2">&quot;font-size&quot;</span><span class="p">,</span> <span class="s2">&quot;line-height&quot;</span><span class="p">,</span> <span class="s2">&quot;white-space&quot;</span><span class="p">,</span> <span class="s2">&quot;padding&quot;</span><span class="p">,</span> <span class="s2">&quot;display&quot;</span><span class="p">,</span> <span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="s2">&quot;border&quot;</span><span class="p">,</span> <span class="s2">&quot;border-top&quot;</span><span class="p">,</span> <span class="s2">&quot;border-right&quot;</span><span class="p">,</span> <span class="s2">&quot;border-bottom&quot;</span><span class="p">,</span> <span class="s2">&quot;border-left&quot;</span><span class="p">,</span> <span class="s2">&quot;border-color&quot;</span><span class="p">,</span> <span class="s2">&quot;border-width&quot;</span><span class="p">,</span> <span class="s2">&quot;border-style&quot;</span><span class="p">,</span> <span class="s2">&quot;padding-top&quot;</span><span class="p">,</span> <span class="s2">&quot;padding-right&quot;</span><span class="p">,</span> <span class="s2">&quot;padding-bottom&quot;</span><span class="p">,</span> <span class="s2">&quot;padding-left&quot;</span><span class="p">,</span> <span class="s2">&quot;height&quot;</span><span class="p">,</span> <span class="s2">&quot;font-weight&quot;</span><span class="p">,</span> <span class="s2">&quot;margin-top&quot;</span><span class="p">,</span> <span class="s2">&quot;margin-left&quot;</span><span class="p">,</span> <span class="s2">&quot;margin-bottom&quot;</span><span class="p">,</span> <span class="s2">&quot;margin-right&quot;</span><span class="p">,</span> <span class="s2">&quot;text-decoration&quot;</span><span class="p">];</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">function</span> <span class="nx">getStyles</span><span class="p">(</span><span class="nx">ele</span><span class="p">,</span> <span class="nx">styles</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">values</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">();</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">styles</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">getPropValue</span><span class="p">(</span><span class="nx">ele</span><span class="p">,</span> <span class="nx">styles</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nx">values</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If we give getStyles an element reference and an array of styles, we get an array of computed CSS values for that element. But remember, we need to do this for every single child element, not just the parent s_BREAKING_NEWS_BOX element. So we need a recursive loop that runs getStyles on the parent, the children, grandchildren, etc. We also have a running count, index, to keep give each elements styles a position in an array, element_styles. Thank to Adam Bratt for help getting this to work.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">loopChildrenGrab</span><span class="p">(</span><span class="nx">this_ele</span><span class="p">,</span> <span class="nx">styles</span><span class="p">,</span> <span class="nx">element_styles</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">element_styles</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="nx">getStyles</span><span class="p">(</span><span class="nx">this_ele</span><span class="p">,</span> <span class="nx">styles</span><span class="p">);</span>
-</span><span class='line'>    <span class="nx">index</span><span class="o">++</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span> <span class="nx">$</span><span class="p">(</span><span class="nx">this_ele</span><span class="p">).</span><span class="nx">children</span><span class="p">().</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="nx">this_ele</span><span class="p">).</span><span class="nx">children</span><span class="p">().</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
-</span><span class='line'>            <span class="nx">loopChildrenGrab</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">styles</span><span class="p">,</span> <span class="nx">element_styles</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nx">element_styles</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now we have a multidimensional array of every single elements style, order by the elements position in the DOM. So we can delete the whole web page that we loaded at first, and then run the reverse of the previous functions to assign each CSS property to our copied HTML:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="nx">pushStyles</span><span class="p">(</span><span class="nx">ele</span><span class="p">,</span> <span class="nx">styles</span><span class="p">,</span> <span class="nx">values</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">styles</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="nx">ele</span><span class="p">).</span><span class="nx">css</span><span class="p">(</span><span class="nx">styles</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">function</span> <span class="nx">loopChildrenPush</span><span class="p">(</span><span class="nx">this_ele</span><span class="p">,</span> <span class="nx">styles</span><span class="p">,</span> <span class="nx">element_styles</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nx">pushStyles</span><span class="p">(</span><span class="nx">this_ele</span><span class="p">,</span> <span class="nx">styles</span><span class="p">,</span> <span class="nx">element_styles</span><span class="p">[</span><span class="nx">count</span><span class="p">]);</span>
-</span><span class='line'>    <span class="nx">count</span><span class="o">++</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span> <span class="nx">$</span><span class="p">(</span><span class="nx">this_ele</span><span class="p">).</span><span class="nx">children</span><span class="p">().</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">$</span><span class="p">(</span><span class="nx">this_ele</span><span class="p">).</span><span class="nx">children</span><span class="p">().</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">loopChildrenPush</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">styles</span><span class="p">,</span> <span class="nx">element_styles</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Tada! We now have successfully copied the HTML and flattened the CSS for each element. s_BREAKING_NEWS_BOX can now be loaded independently of its parent page.</p>
-
-<p>What would it take to do this server-side? In short, render the HTML in some sort of web view, then extract the flattened CSS for every element. While it is possible, and most likely the way to proceed with this project, letting the browser do the heavy lifting rendering CSS is definitely easier in the short term.</p>
-
-		
-		
-	</div>
-</article>
-
 <nav id="pagenavi">
     
+    
+        <a href="/blog/page/2/" class="next">Next</a>
     
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav></div>
