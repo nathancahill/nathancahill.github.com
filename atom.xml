@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2012-10-13T08:07:46-04:00</updated>
+  <updated>2012-10-14T08:07:10-04:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -12,6 +12,47 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Just-In-Time Architecture Scaling]]></title>
+    <link href="http://nathancahill.github.com/jit-scaling-architecture/"/>
+    <updated>2012-10-14T06:22:00-04:00</updated>
+    <id>http://nathancahill.github.com/jit-scaling-architecture</id>
+    <content type="html"><![CDATA[<p>Any discussion about the architecture of a software project leads to
+arguments over the best way to achieve scalability. Essentially, it comes down to
+finding a happy medium between the <strong>time required</strong> to develop a scalable
+architecture and <strong>how scalable</strong> that architecture will be.</p>
+
+<p>On one theoretical extreme, we could build a simple prototype of our software
+over the weekend, capable of supporting 100 users. Once we pass 100 users, we
+would have to restructure the architecture. On the other side, we could spend a
+year building rock solid software, capable of supporting 100 million users.</p>
+
+<p>This is where the idea of <strong>Just-In-Time</strong> (JIT) scaling comes in. Once you&#8217;ve
+reached a certain amount of users on the first iteration, you can afford to
+spend more time developing the next iteration. Scaling can be done through
+iterations. <strong>Avoid premature optimization</strong>.</p>
+
+<p>Facebook first ran on PHP and Twitter ran on Rails. Stackoverflow used C#.
+Although the choices of language or database are the most often questioned at
+the initial stage, these are not very important questions. <strong>Build with the
+stack that you know</strong>. Reaching the limits of the stack used in the first
+iteration is A Good Problem to have.</p>
+
+<p>Even before you reach the limits of iteration one, you can start development
+on a more robust, scalable architecture. By always building &#8221;<a href="http://www.codingthearchitecture.com/pages/book/just-enough-architecture.html">just enough</a>&#8221;,
+you can minimize development time while staying ahead of the scalability curve.
+Keep in mind that, no matter what scripting language the prototype was built in,
+once your software scales to hundreds of thousands of users, you will likely be
+running on heavily optimized low-level code.</p>
+
+<p>Of course, there&#8217;s no need to completely rewrite your entire codebase every time
+your growth multiplies. By modularizing development of different components, and
+by using internal APIs and queues, you can <strong>scale distinct parts</strong> of the
+software independently. These design questions are the questions that are
+important to ask.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Pro tip: Manage cron like a boss]]></title>

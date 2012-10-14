@@ -1,0 +1,196 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Just-In-Time Architecture Scaling - Nathan Cahill</title>
+	<meta name="author" content="Nathan Cahill">
+
+	
+	<meta name="description" content="Any discussion about the architecture of a software project leads to
+arguments over the best way to achieve scalability. Essentially, it comes down &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Nathan Cahill" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="//use.typekit.net/dqs7xdv.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Nathan Cahill</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="http://www.nathancahill.com">Website + Portfolio</a></li>
+	<li><a href="https://github.com/nathancahill">Github</a></li>
+	
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="http://www.nathancahill.com">Website + Portfolio</a></li>
+	<li><a href="https://github.com/nathancahill">Github</a></li>
+	
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:nathancahill.github.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:nathancahill.github.com">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-14T06:22:00-04:00" pubdate data-updated="true">Oct 14<span>th</span>, 2012</time></div>
+	<h1 class="title">Just-In-Time Architecture Scaling</h1>
+	<div class="entry-content"><p>Any discussion about the architecture of a software project leads to
+arguments over the best way to achieve scalability. Essentially, it comes down to
+finding a happy medium between the <strong>time required</strong> to develop a scalable
+architecture and <strong>how scalable</strong> that architecture will be.</p>
+
+<p>On one theoretical extreme, we could build a simple prototype of our software
+over the weekend, capable of supporting 100 users. Once we pass 100 users, we
+would have to restructure the architecture. On the other side, we could spend a
+year building rock solid software, capable of supporting 100 million users.</p>
+
+<p>This is where the idea of <strong>Just-In-Time</strong> (JIT) scaling comes in. Once you&#8217;ve
+reached a certain amount of users on the first iteration, you can afford to
+spend more time developing the next iteration. Scaling can be done through
+iterations. <strong>Avoid premature optimization</strong>.</p>
+
+<p>Facebook first ran on PHP and Twitter ran on Rails. Stackoverflow used C#.
+Although the choices of language or database are the most often questioned at
+the initial stage, these are not very important questions. <strong>Build with the
+stack that you know</strong>. Reaching the limits of the stack used in the first
+iteration is A Good Problem to have.</p>
+
+<p>Even before you reach the limits of iteration one, you can start development
+on a more robust, scalable architecture. By always building &#8221;<a href="http://www.codingthearchitecture.com/pages/book/just-enough-architecture.html">just enough</a>&#8221;,
+you can minimize development time while staying ahead of the scalability curve.
+Keep in mind that, no matter what scripting language the prototype was built in,
+once your software scales to hundreds of thousands of users, you will likely be
+running on heavily optimized low-level code.</p>
+
+<p>Of course, there&#8217;s no need to completely rewrite your entire codebase every time
+your growth multiplies. By modularizing development of different components, and
+by using internal APIs and queues, you can <strong>scale distinct parts</strong> of the
+software independently. These design questions are the questions that are
+important to ask.</p>
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2012
+
+    Nathan Cahill
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'nathancahill';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://nathancahill.github.com/jit-scaling-architecture/';
+        var disqus_url = 'http://nathancahill.github.com/jit-scaling-architecture/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-29405367-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>
