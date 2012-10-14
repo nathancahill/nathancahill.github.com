@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2012-10-14T08:07:10-04:00</updated>
+  <updated>2012-10-14T08:08:01-04:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Just-In-Time Architecture Scaling]]></title>
-    <link href="http://nathancahill.github.com/jit-scaling-architecture/"/>
+    <link href="http://nathancahill.github.com/jit-architecture-scaling/"/>
     <updated>2012-10-14T06:22:00-04:00</updated>
-    <id>http://nathancahill.github.com/jit-scaling-architecture</id>
+    <id>http://nathancahill.github.com/jit-architecture-scaling</id>
     <content type="html"><![CDATA[<p>Any discussion about the architecture of a software project leads to
 arguments over the best way to achieve scalability. Essentially, it comes down to
 finding a happy medium between the <strong>time required</strong> to develop a scalable
