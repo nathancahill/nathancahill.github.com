@@ -59,11 +59,17 @@
         <lastmod>2012-10-16T16:32:35-04:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://nathancahill.github.com/automatically-activate-virtualenv-on-cd-into-directory/
+        </loc>
+        <lastmod>2012-10-16T19:16:22-04:00</lastmod>
+    </url>
+    <url>
         <loc>http://nathancahill.github.com/blog/archives/</loc>
-        <lastmod>2012-10-16T16:32:35-04:00</lastmod>
+        <lastmod>2012-10-16T19:16:22-04:00</lastmod>
     </url>
     <url>
         <loc>http://nathancahill.github.com/</loc>
-        <lastmod>2012-10-16T16:32:35-04:00</lastmod>
+        <lastmod>2012-10-16T19:16:22-04:00</lastmod>
     </url>
 </urlset>

@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2012-10-16T16:33:14-04:00</updated>
+  <updated>2012-10-16T19:17:05-04:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -12,6 +12,29 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Automatically activate virtualenv on cd into directory]]></title>
+    <link href="http://nathancahill.github.com/automatically-activate-virtualenv-on-cd-into-directory/"/>
+    <updated>2012-10-16T19:08:00-04:00</updated>
+    <id>http://nathancahill.github.com/automatically-activate-virtualenv-on-cd-into-directory</id>
+    <content type="html"><![CDATA[<p>I find myself typing <code>source venv/bin/activate</code> a lot when switching between Python projects. I added this function to my .bash_profile. It checks if there’s a directory named venv (or virtualenv or whatever you use). If there is, it activates the virtual environment automagically.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>function cd {
+</span><span class='line'>    builtin cd "$@"
+</span><span class='line'>    if [ -d "venv" ] ; then
+</span><span class='line'>        source venv/bin/activate
+</span><span class='line'>    fi
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Connecting Things that are Inherently Disconnected]]></title>
