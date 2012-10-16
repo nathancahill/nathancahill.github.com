@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2012-10-16T19:17:05-04:00</updated>
+  <updated>2012-10-16T19:20:14-04:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -14,10 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Automatically activate virtualenv on cd into directory]]></title>
-    <link href="http://nathancahill.github.com/automatically-activate-virtualenv-on-cd-into-directory/"/>
+    <title type="html"><![CDATA[Automatically activate virtualenv]]></title>
+    <link href="http://nathancahill.github.com/automatically-activate-virtualenv/"/>
     <updated>2012-10-16T19:08:00-04:00</updated>
-    <id>http://nathancahill.github.com/automatically-activate-virtualenv-on-cd-into-directory</id>
+    <id>http://nathancahill.github.com/automatically-activate-virtualenv</id>
     <content type="html"><![CDATA[<p>I find myself typing <code>source venv/bin/activate</code> a lot when switching between Python projects. I added this function to my .bash_profile. It checks if there’s a directory named venv (or virtualenv or whatever you use). If there is, it activates the virtual environment automagically.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
