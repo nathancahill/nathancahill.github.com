@@ -53,11 +53,17 @@
         <lastmod>2012-10-14T08:06:43-04:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://nathancahill.github.com/connecting-things-that-are-inherently-disconnected/
+        </loc>
+        <lastmod>2012-10-16T06:13:19-04:00</lastmod>
+    </url>
+    <url>
         <loc>http://nathancahill.github.com/blog/archives/</loc>
-        <lastmod>2012-10-14T08:06:43-04:00</lastmod>
+        <lastmod>2012-10-16T06:13:19-04:00</lastmod>
     </url>
     <url>
         <loc>http://nathancahill.github.com/</loc>
-        <lastmod>2012-10-14T08:06:43-04:00</lastmod>
+        <lastmod>2012-10-16T06:13:19-04:00</lastmod>
     </url>
 </urlset>
