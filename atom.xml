@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2012-10-18T00:18:04-04:00</updated>
+  <updated>2012-10-21T15:44:25-04:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -12,15 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Semuc Champey]]></title>
-    <link href="http://nathancahill.github.com/semuc-champey/"/>
-    <updated>2012-10-18T00:14:00-04:00</updated>
-    <id>http://nathancahill.github.com/semuc-champey</id>
-    <content type="html"><![CDATA[<p><img src="http://nathancahill.github.com/images/semuc_champey.jpg"></p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Automatically activate virtualenv]]></title>
@@ -147,7 +138,7 @@ file for the first time, run:</p>
 Ubuntu, cron messages are logged to the /var/log/syslog file. There&#8217;s ways to
 set up logs for each cron job, but if you just want a simple way to make sure
 your nightly backups are running, check out
-<a href="https://deadmanssnitch.com/">Dead Man&#8217;s Snitch</a>.</p>
+<a href="https://deadmanssnitch.com/r/6a14074e63">Dead Man&#8217;s Snitch</a>.</p>
 
 <p>DMS is an awesome web app that shows the status of each of your cron jobs, and
 how long ago it last ran. It does cost $19/month for more than one job, but if

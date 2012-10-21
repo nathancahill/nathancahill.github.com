@@ -7,7 +7,7 @@
 	<meta name="author" content="Nathan Cahill">
 
 	
-	<meta name="description" content=" ">
+	<meta name="description" content="I find myself typing source venv/bin/activate a lot when switching between Python projects. I added this function to my .bash_profile. It checks if &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -75,30 +75,6 @@
 		
 	
 	<div id="content" class="inner">
-
-
-    <article class="post">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-18T00:14:00-04:00" pubdate data-updated="true">Oct 18<span>th</span>, 2012</time></div>
-	<h1 class="title"><a href="/semuc-champey/">Semuc Champey</a></h1>
-	<div class="entry-content">
-		<p><img src="http://nathancahill.github.com/images/semuc_champey.jpg"></p>
-
-		
-		
-	</div>
-</article>
 
 
     <article class="post">
@@ -282,7 +258,7 @@ file for the first time, run:</p>
 Ubuntu, cron messages are logged to the /var/log/syslog file. There&#8217;s ways to
 set up logs for each cron job, but if you just want a simple way to make sure
 your nightly backups are running, check out
-<a href="https://deadmanssnitch.com/">Dead Man&#8217;s Snitch</a>.</p>
+<a href="https://deadmanssnitch.com/r/6a14074e63">Dead Man&#8217;s Snitch</a>.</p>
 
 <p>DMS is an awesome web app that shows the status of each of your cron jobs, and
 how long ago it last ran. It does cost $19/month for more than one job, but if
@@ -619,6 +595,62 @@ add a second gesture, the three-finger swipe up, and bind it to &#x2318;+Tab. Th
 you were using before you triggered iTerm, and effectively sends the window swishing back up.</p>
 
 <p><img src="http://nathancahill.github.com/images/window2.png"></p>
+
+		
+		
+	</div>
+</article>
+
+
+    <article class="post">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-09T02:59:00-04:00" pubdate data-updated="true">Sep 9<span>th</span>, 2012</time></div>
+	<h1 class="title"><a href="/make-requests-cache-play-nicely-with-heroku/">Make Requests-Cache Play Nicely With Heroku</a></h1>
+	<div class="entry-content">
+		<p>The Python module that has saved me the most time is, without a doubt, the
+<a href="http://docs.python-requests.org/en/latest/index.html">Requests</a> module by
+<a href="http://kennethreitz.com/">Kenneth Reitz</a>. This guy never fails to produces awesomeness.</p>
+
+<p>The tagline is &#8220;HTTP for Humans&#8221;, and the whole thing is very pythonic. It was missing,
+however, an equally pythonic way to deal with caching. Fortunately,
+<a href="https://github.com/reclosedev/requests-cache">Requests-Cache</a> fills the void. It supports
+several different caching backends, as well as an extensible interface for adding new
+ones.</p>
+
+<p>SQLite is the default, and probably works well in most cases. But it fails completely when
+deploying to Heroku. That&#8217;s because SQLite requires a permanent writable file system. It
+ultimately needs access to the POSIX fopen() and fwrite() API calls to a particular file.
+<a href="https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem">Heroku does not provide a permanent writable file system</a>.
+It doesn&#8217;t even allow the SQLite3 module to be installed:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ImportError: No module named _sqlite3</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Even though Requests-Cache supports in memory caching, I had to remove a couple parts of
+the module to get it to even import on Heroku. I removed the sqlite.py backend file <code>requests_cache/backends/sqlite.py</code>
+and delete the couple sqlite lines from <code>requests_cache/backends/__init__.py</code>. After
+that, it imported fine and is easy to set up in memory caches, like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>requests_cache.configure('cache_name', 'memory')</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here&#8217;s <a href="https://github.com/nathancahill/requests-cache">my fork of the repo</a> with those changes.</p>
+
+<p>If you know a better solution, or have another way of caching HTTP requests easily with
+Python, let me know.</p>
 
 		
 		
