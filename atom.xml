@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2012-10-21T15:44:25-04:00</updated>
+  <updated>2012-10-22T10:25:41-04:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -115,7 +115,7 @@ in this file, then load it in to cron with the crontab command:</p>
 
 <p>Note: This clears all existing jobs. Back them up first with the command below.</p>
 
-<h2>Easiest way to see what&#8217;s already loaded</h2>
+<h2>Easiest way to see what jobs are loaded</h2>
 
 <p>If you want to check what jobs are already loaded in cron, or generate a .cron
 file for the first time, run:</p>
