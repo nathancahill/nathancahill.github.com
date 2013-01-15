@@ -3,11 +3,11 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Automatically activate virtualenv - Nathan Cahill</title>
+	<title>Autocompletion in git - Nathan Cahill</title>
 	<meta name="author" content="Nathan Cahill">
 
 	
-	<meta name="description" content="I find myself typing source venv/bin/activate a lot when switching between Python projects. I added this function to my .bash_profile. It checks if &hellip;">
+	<meta name="description" content="Do you like hitting tab to autocomplete long file name and commands? Do you use git? Then you need to install this right now! Git doesn’t &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -87,23 +87,17 @@
   
 
 
-<time datetime="2012-10-16T19:08:00-04:00" pubdate data-updated="true">Oct 16<span>th</span>, 2012</time></div>
-	<h1 class="title">Automatically Activate Virtualenv</h1>
-	<div class="entry-content"><p>I find myself typing <code>source venv/bin/activate</code> a lot when switching between Python projects. I added this function to my .bash_profile. It checks if there’s a directory named venv (or virtualenv or whatever you use). If there is, it activates the virtual environment automagically.</p>
+<time datetime="2013-01-15T18:04:00-05:00" pubdate data-updated="true">Jan 15<span>th</span>, 2013</time></div>
+	<h1 class="title">Autocompletion in Git</h1>
+	<div class="entry-content"><p>Do you like hitting tab to autocomplete long file name and commands? Do you use git? Then you need to install this right now! Git doesn’t autocomplete commands or branch names, but you can enable it with this script.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>function cd {
-</span><span class='line'>    builtin cd "$@"
-</span><span class='line'>    if [ -d "venv" ] ; then
-</span><span class='line'>        source venv/bin/activate
-</span><span class='line'>    fi
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+<p>Grab it from here: <a href="https://raw.github.com/git/git/master/contrib/completion/git-completion.bash">https://raw.github.com/git/git/master/contrib/completion/git-completion.bash</a></p>
 
+<p>Save it in <code>~/.git-completion.bash</code> and add this line to your <code>~/.bash_profile</code>: <code>source ~/.git-completion.bash</code></p>
+
+<p>You are now a git speed ninja. You’ll wonder what to do with all your extra time (and why git doesn’t include this be default).</p>
+
+<p>Thanks to <a href="http://mbuttu.wordpress.com/2011/07/11/git-autocomplete-for-bash-shells/">Mohammed Buttu</a> and <a href="http://stackoverflow.com/questions/9550447/is-there-a-shortcut-for-git-branch-name/">simont on StackOverflow</a>.</p>
 </div>
 </article>
 
@@ -146,8 +140,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://nathancahill.github.com/automatically-activate-virtualenv/';
-        var disqus_url = 'http://nathancahill.github.com/automatically-activate-virtualenv/';
+        var disqus_identifier = 'http://nathancahill.github.com/autocompletion-in-git/';
+        var disqus_url = 'http://nathancahill.github.com/autocompletion-in-git/';
         var disqus_script = 'embed.js';
       
     (function () {

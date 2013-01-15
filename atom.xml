@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2012-10-26T21:25:16-04:00</updated>
+  <updated>2013-01-15T18:39:46-05:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Autocompletion in git]]></title>
+    <link href="http://nathancahill.github.com/autocompletion-in-git/"/>
+    <updated>2013-01-15T18:04:00-05:00</updated>
+    <id>http://nathancahill.github.com/autocompletion-in-git</id>
+    <content type="html"><![CDATA[<p>Do you like hitting tab to autocomplete long file name and commands? Do you use git? Then you need to install this right now! Git doesn’t autocomplete commands or branch names, but you can enable it with this script.</p>
+
+<p>Grab it from here: <a href="https://raw.github.com/git/git/master/contrib/completion/git-completion.bash">https://raw.github.com/git/git/master/contrib/completion/git-completion.bash</a></p>
+
+<p>Save it in <code>~/.git-completion.bash</code> and add this line to your <code>~/.bash_profile</code>: <code>source ~/.git-completion.bash</code></p>
+
+<p>You are now a git speed ninja. You’ll wonder what to do with all your extra time (and why git doesn’t include this be default).</p>
+
+<p>Thanks to <a href="http://mbuttu.wordpress.com/2011/07/11/git-autocomplete-for-bash-shells/">Mohammed Buttu</a> and <a href="http://stackoverflow.com/questions/9550447/is-there-a-shortcut-for-git-branch-name/">simont on StackOverflow</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Automatically activate virtualenv]]></title>
