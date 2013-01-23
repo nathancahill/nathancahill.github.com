@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2013-01-15T18:39:46-05:00</updated>
+  <updated>2013-01-23T10:25:00-08:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -14,9 +14,56 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Kaleidoscope: The Most Powerful Diff Tool for Mac OS X]]></title>
+    <link href="http://nathancahill.github.com/kaleidoscope-the-most-powerful-diff-tool-for-mac-os-x/"/>
+    <updated>2013-01-23T00:58:00-08:00</updated>
+    <id>http://nathancahill.github.com/kaleidoscope-the-most-powerful-diff-tool-for-mac-os-x</id>
+    <content type="html"><![CDATA[<p>Since <code>diff</code> was first published in 1974, file comparison tools have been a staple of any developers toolbelt. Especially when using git, I run diffs all the time. My default GUI was Apple’s FileMerge app (bundled with <a href="https://developer.apple.com/technologies/tools/">Apple Developer Tools</a>). I say <em>was</em> because it’s been completely blown out of the water by <a href="http://www.kaleidoscopeapp.com/">Kaleidoscope 2</a>.</p>
+
+<p><strong>Kaleidoscope</strong> by <a href="http://blackpixel.com/">Black Pixel</a> surpasses any other diff tool I’ve ever used. It’s stunningly beautiful and intuitive. Powerful too. It can compare text, folders and even images. It nails color highlighting, and gives you three different views for comparing files (Block, Fluid and it’s new &#8220;Unified&#8221; view).</p>
+
+<p>The best part? It’s fully integrated with git (and SVN and Mercurial). That means that commands like <code>git difftool</code> or <code>git mergetool</code> can use Kaleidoscope to compare and merge files. After installing Kaleidoscope and it’s command line tool, <code>ksdiff</code>, you can run <code>git difftool -t Kaleidoscope</code> to compare files in the app. Alternatively, set it as the default difftool and mergetool by adding the following to your git config:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[difftool "Kaleidoscope"]
+</span><span class='line'>  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+</span><span class='line'>[diff]
+</span><span class='line'>  tool = Kaleidoscope
+</span><span class='line'>[difftool]
+</span><span class='line'>  prompt = false
+</span><span class='line'>
+</span><span class='line'>[mergetool "Kaleidoscope"]
+</span><span class='line'>  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+</span><span class='line'>  trustExitCode = true
+</span><span class='line'>[mergetool]
+</span><span class='line'>  prompt = false
+</span><span class='line'>[merge]
+</span><span class='line'>  tool = Kaleidoscope</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It’s a little pricey at $70, but it’s worth every penny. It’s even on sale 50% off until Jan 30!</p>
+
+<p>Next time you see <code>Automatic merge failed; fix conflicts and then commit the result</code> you’ll be grateful to have Kaleidoscope in your toolbelt.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Autocompletion in git]]></title>
     <link href="http://nathancahill.github.com/autocompletion-in-git/"/>
-    <updated>2013-01-15T18:04:00-05:00</updated>
+    <updated>2013-01-15T18:04:00-08:00</updated>
     <id>http://nathancahill.github.com/autocompletion-in-git</id>
     <content type="html"><![CDATA[<p>Do you like hitting tab to autocomplete long file name and commands? Do you use git? Then you need to install this right now! Git doesn’t autocomplete commands or branch names, but you can enable it with this script.</p>
 
@@ -33,7 +80,7 @@
   <entry>
     <title type="html"><![CDATA[Automatically activate virtualenv]]></title>
     <link href="http://nathancahill.github.com/automatically-activate-virtualenv/"/>
-    <updated>2012-10-16T19:08:00-04:00</updated>
+    <updated>2012-10-16T19:08:00-07:00</updated>
     <id>http://nathancahill.github.com/automatically-activate-virtualenv</id>
     <content type="html"><![CDATA[<p>I find myself typing <code>source venv/bin/activate</code> a lot when switching between Python projects. I added this function to my .bash_profile. It checks if there’s a directory named venv (or virtualenv or whatever you use). If there is, it activates the virtual environment automagically.</p>
 
@@ -56,7 +103,7 @@
   <entry>
     <title type="html"><![CDATA[Connecting Things that are Inherently Disconnected]]></title>
     <link href="http://nathancahill.github.com/connecting-things-that-are-inherently-disconnected/"/>
-    <updated>2012-10-16T06:08:00-04:00</updated>
+    <updated>2012-10-16T06:08:00-07:00</updated>
     <id>http://nathancahill.github.com/connecting-things-that-are-inherently-disconnected</id>
     <content type="html"><![CDATA[<p>As much as we live in an overly connected world, our data online lives in seperate silos. Everything is locked down behind logins and API-less websites. That’s why startups and web apps that connect these disconnected silos are so exciting to me. I’m a huge fan of <a href="http://ifttt.com/">IFTTT</a>. <a href="http://www.olark.com/">Olark</a>. <a href="http://thread.is/">Thread.is</a>. <a href="http://zapier.com/">Zapier</a>. <a href="http://rapportive.com/">Rapportive</a>. <a href="https://www.filepicker.io/">Filepicker.io</a>. <a href="http://hellofax.com/">HelloFax</a>. <a href="http://boxcar.io/">Boxcar</a>. <a href="https://card.io/">Card.io</a>. <a href="https://www.easypost.co/">EasyPost</a>. <a href="http://lessneglect.com/">Less Neglect</a>. <a href="http://www.instapaper.com/">Instapaper</a>. <a href="http://www.timbreapp.com/">Timbre</a>.</p>
 
@@ -71,7 +118,7 @@
   <entry>
     <title type="html"><![CDATA[Just-In-Time Architecture Scaling]]></title>
     <link href="http://nathancahill.github.com/jit-architecture-scaling/"/>
-    <updated>2012-10-14T06:22:00-04:00</updated>
+    <updated>2012-10-14T06:22:00-07:00</updated>
     <id>http://nathancahill.github.com/jit-architecture-scaling</id>
     <content type="html"><![CDATA[<p>Any discussion about the architecture of a software project leads to
 arguments over the best way to achieve scalability. Essentially, it comes down to
@@ -112,7 +159,7 @@ important to ask.</p>
   <entry>
     <title type="html"><![CDATA[Pro tip: Manage cron like a boss]]></title>
     <link href="http://nathancahill.github.com/pro-tip-manage-cron-like-a-boss/"/>
-    <updated>2012-10-13T02:39:00-04:00</updated>
+    <updated>2012-10-13T02:39:00-07:00</updated>
     <id>http://nathancahill.github.com/pro-tip-manage-cron-like-a-boss</id>
     <content type="html"><![CDATA[<p>Managing cron can be a little intimidating to the uninitiated. How do you
 load jobs in to cron? How do you know what&#8217;s running? How can you check on each
@@ -182,7 +229,7 @@ Now, go ahead and cron ALL OF THE THINGS!</p>
   <entry>
     <title type="html"><![CDATA[Using RAM Drives]]></title>
     <link href="http://nathancahill.github.com/photoshop-in-memory-scratch-disk/"/>
-    <updated>2012-10-12T05:51:00-04:00</updated>
+    <updated>2012-10-12T05:51:00-07:00</updated>
     <id>http://nathancahill.github.com/photoshop-in-memory-scratch-disk</id>
     <content type="html"><![CDATA[<p>After getting a new Macbook Pro with 16GB of RAM (<a href="http://www.newegg.com/Product/Product.aspx?Item=N82E16820231576">G.Skill</a>, not from Apple, highly recommended),
 I starting looking for ways to put it to use. One of my favorite hacks is
@@ -226,7 +273,7 @@ and running it from a VM. Entire operating system in memory.</li>
   <entry>
     <title type="html"><![CDATA[Hackers and Hustlers: Where next?]]></title>
     <link href="http://nathancahill.github.com/hackers-and-hustlers-where-next/"/>
-    <updated>2012-09-24T20:14:00-04:00</updated>
+    <updated>2012-09-24T20:14:00-07:00</updated>
     <id>http://nathancahill.github.com/hackers-and-hustlers-where-next</id>
     <content type="html"><![CDATA[<p><img class="left" src="http://f.cl.ly/items/3d042x1j1X2d0B0C1z1i/hh-sticker.png" width="110" height="110"></p>
 
@@ -249,7 +296,7 @@ and running it from a VM. Entire operating system in memory.</li>
   <entry>
     <title type="html"><![CDATA[Circus, Nginx and Websockets]]></title>
     <link href="http://nathancahill.github.com/circus/"/>
-    <updated>2012-09-24T03:28:00-04:00</updated>
+    <updated>2012-09-24T03:28:00-07:00</updated>
     <id>http://nathancahill.github.com/circus</id>
     <content type="html"><![CDATA[<p>Looking for a high performance, powerfull process manager for a Python project I&#8217;m working on, I stumbled on <a href="http://circus.io/">Circus</a> on this <a href="http://blog.ziade.org/2012/06/28/wgsi-web-servers-bench/">excellent benchmark blog post</a>. After running my own benchmark tests, I agree that the <a href="http://circus.io/">Circus</a> + <a href="http://chaussette.readthedocs.org">Chaussette</a> + <a href="http://meinheld.org/">Meinheld</a> stack is the way to go. High concurrency, fast response time, and socket support are the features that pulled me in. I&#8217;m switching off of <a href="http://supervisord.org/">Supervisord</a>, because: a) Circus integrates directly with <a href="http://zeromq.org/">ZeroMQ</a>, and b) <a href="http://gunicorn.org/">Gunicorn</a> + Supervisord requires two levels of process management: Supervisor controls gunicorn, and gunicorn in turn watching it&#8217;s own worker processes. Circus keeps everything on the same level.</p>
 
@@ -376,7 +423,7 @@ and running it from a VM. Entire operating system in memory.</li>
   <entry>
     <title type="html"><![CDATA[FontPrep: The missing CSS3 font generator for Mac OS X]]></title>
     <link href="http://nathancahill.github.com/fontprep-the-missing-css3-font-generator-for-mac-os-x/"/>
-    <updated>2012-09-19T04:32:00-04:00</updated>
+    <updated>2012-09-19T04:32:00-07:00</updated>
     <id>http://nathancahill.github.com/fontprep-the-missing-css3-font-generator-for-mac-os-x</id>
     <content type="html"><![CDATA[<p><img class="right" src="http://nathancahill.github.com/images/window3.png"></p>
 
@@ -395,7 +442,7 @@ and running it from a VM. Entire operating system in memory.</li>
   <entry>
     <title type="html"><![CDATA[iTerm + BetterTouchTool]]></title>
     <link href="http://nathancahill.github.com/iterm-plus-bettertouchtool/"/>
-    <updated>2012-09-19T01:35:00-04:00</updated>
+    <updated>2012-09-19T01:35:00-07:00</updated>
     <id>http://nathancahill.github.com/iterm-plus-bettertouchtool</id>
     <content type="html"><![CDATA[<p>The best terminal emulator for Mac OS X is <a href="http://www.iterm2.com/">iTerm2</a>. I especially love the drop-down style windows.
 No matter what I&#8217;m doing, there&#8217;s always a command prompt a &#x2318;+Tab away. And it floats over my current windows, so I
@@ -426,7 +473,7 @@ you were using before you triggered iTerm, and effectively sends the window swis
   <entry>
     <title type="html"><![CDATA[Make Requests-Cache play nicely with Heroku]]></title>
     <link href="http://nathancahill.github.com/make-requests-cache-play-nicely-with-heroku/"/>
-    <updated>2012-09-09T02:59:00-04:00</updated>
+    <updated>2012-09-09T02:59:00-07:00</updated>
     <id>http://nathancahill.github.com/make-requests-cache-play-nicely-with-heroku</id>
     <content type="html"><![CDATA[<p>The Python module that has saved me the most time is, without a doubt, the
 <a href="http://docs.python-requests.org/en/latest/index.html">Requests</a> module by
@@ -467,7 +514,7 @@ Python, let me know.</p>
   <entry>
     <title type="html"><![CDATA[OAuth with Twitter and Python Flask]]></title>
     <link href="http://nathancahill.github.com/oauth-with-twitter-and-python-flask/"/>
-    <updated>2012-09-07T20:04:00-04:00</updated>
+    <updated>2012-09-07T20:04:00-07:00</updated>
     <id>http://nathancahill.github.com/oauth-with-twitter-and-python-flask</id>
     <content type="html"><![CDATA[<p>Here&#8217;s a couple tips on getting OAuth to work with Python Flask.</p>
 
@@ -612,7 +659,7 @@ function.</p>
   <entry>
     <title type="html"><![CDATA[Film: Canon AE-1 Program]]></title>
     <link href="http://nathancahill.github.com/film-canon-ae-1-program/"/>
-    <updated>2012-08-28T20:20:00-04:00</updated>
+    <updated>2012-08-28T20:20:00-07:00</updated>
     <id>http://nathancahill.github.com/film-canon-ae-1-program</id>
     <content type="html"><![CDATA[<p><img src="http://nathancahill.github.com/images/ae-1/8.jpg"></p>
 
@@ -665,7 +712,7 @@ function.</p>
   <entry>
     <title type="html"><![CDATA[Startup in... Latin America?]]></title>
     <link href="http://nathancahill.github.com/startup-in-dot-dot-dot-latin-america/"/>
-    <updated>2012-08-16T00:41:00-04:00</updated>
+    <updated>2012-08-16T00:41:00-07:00</updated>
     <id>http://nathancahill.github.com/startup-in-dot-dot-dot-latin-america</id>
     <content type="html"><![CDATA[<p>Paul Graham recently wrote about <a href="http://www.paulgraham.com/hubs.html">Why Startup Hubs Work</a>. He cited two reasons why startups do not die in startup hubs:</p>
 
@@ -686,7 +733,7 @@ function.</p>
   <entry>
     <title type="html"><![CDATA[On extracting an element from a web page with CSS styles]]></title>
     <link href="http://nathancahill.github.com/on-extracting-an-element-from-a-web-page-with-css-styles/"/>
-    <updated>2012-06-16T08:15:00-04:00</updated>
+    <updated>2012-06-16T08:15:00-07:00</updated>
     <id>http://nathancahill.github.com/on-extracting-an-element-from-a-web-page-with-css-styles</id>
     <content type="html"><![CDATA[<p>The goal: to extract an element from a web page and display it independently from it&#8217;s original website.</p>
 

@@ -87,7 +87,7 @@
   
 
 
-<time datetime="2012-09-24T03:28:00-04:00" pubdate data-updated="true">Sep 24<span>th</span>, 2012</time></div>
+<time datetime="2012-09-24T03:28:00-07:00" pubdate data-updated="true">Sep 24<span>th</span>, 2012</time></div>
 	<h1 class="title">Circus, Nginx and Websockets</h1>
 	<div class="entry-content"><p>Looking for a high performance, powerfull process manager for a Python project I&#8217;m working on, I stumbled on <a href="http://circus.io/">Circus</a> on this <a href="http://blog.ziade.org/2012/06/28/wgsi-web-servers-bench/">excellent benchmark blog post</a>. After running my own benchmark tests, I agree that the <a href="http://circus.io/">Circus</a> + <a href="http://chaussette.readthedocs.org">Chaussette</a> + <a href="http://meinheld.org/">Meinheld</a> stack is the way to go. High concurrency, fast response time, and socket support are the features that pulled me in. I&#8217;m switching off of <a href="http://supervisord.org/">Supervisord</a>, because: a) Circus integrates directly with <a href="http://zeromq.org/">ZeroMQ</a>, and b) <a href="http://gunicorn.org/">Gunicorn</a> + Supervisord requires two levels of process management: Supervisor controls gunicorn, and gunicorn in turn watching it&#8217;s own worker processes. Circus keeps everything on the same level.</p>
 
