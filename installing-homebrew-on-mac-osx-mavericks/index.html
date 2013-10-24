@@ -1,0 +1,187 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Installing Homebrew on Mac OSX 10.9 Mavericks - Nathan Cahill</title>
+	<meta name="author" content="Nathan Cahill">
+
+	
+	<meta name="description" content="Note: This is a hack. Read the comments, specifically Daniel Dunbar&#8217;s, for a better way to do this. Do not use this method anymore. After &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Nathan Cahill" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="//use.typekit.net/dqs7xdv.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Nathan Cahill</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="http://www.nathancahill.com">Website + Portfolio</a></li>
+	<li><a href="https://github.com/nathancahill">Github</a></li>
+	<li><a href="https://twitter.com/nathancahill">Twitter</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="http://www.nathancahill.com">Website + Portfolio</a></li>
+	<li><a href="https://github.com/nathancahill">Github</a></li>
+	<li><a href="https://twitter.com/nathancahill">Twitter</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:nathancahill.github.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:nathancahill.github.com">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-12T01:41:00-07:00" pubdate data-updated="true">Jun 12<span>th</span>, 2013</time></div>
+	<h1 class="title">Installing Homebrew on Mac OSX 10.9 Mavericks</h1>
+	<div class="entry-content"><p><strong>Note: This is a hack. Read the comments, specifically Daniel Dunbar&#8217;s, for a better way to do this. Do not use this method anymore. </strong></p>
+
+<p>After installing the developer preview of Mac OSX Mavericks, I started installing my usual list of apps, tools and tweaks. First on the list is always <a href="http://mxcl.github.io/homebrew/">Homebrew</a>, my favorite command line tool. It took a little finessing to get it running, but it works fine, despite the warnings about 10.9 being unsupported.</p>
+
+<p>Before trying to install any packages, I installed the developer preview of Xcode 5 to get the command line tools for compiling. Without the command line tools, you get errors like this trying to install git: <code>git-credential-osxkeychain.c:131: error: ‘protocol’ undeclared (first use in this function)</code></p>
+
+<p>Unfortunately, it seems that Xcode 5 is doing something different with the command line tools. They are not available for download as they were in Xcode 4.</p>
+
+<p><img src="http://nathancahill.github.com/images/downloads.jpg"></p>
+
+<p>I also tried using Kenneth Reitz’s wonderful <a href="https://github.com/kennethreitz/osx-gcc-installer">osx-gcc-installer</a>, but Homebrew complained about mismatched compiler versions when using the Mountain Lion installer.</p>
+
+<p>The trick is to download the command line tools from <a href="https://developer.apple.com/downloads/index.action">developer.apple.com</a> and spoof the OS version as 10.8 so that it can be installed. Simply change two lines in /System/Library/CoreServices/SystemVersion.plist:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;key&gt;ProductUserVisibleVersion&lt;/key&gt;
+</span><span class='line'>&lt;string&gt;10.8&lt;/string&gt;
+</span><span class='line'>&lt;key&gt;ProductVersion&lt;/key&gt;
+</span><span class='line'>&lt;string&gt;10.8&lt;/string&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You may have to reboot after changing the version. Be sure to change it back to 10.9 after installing the command line tools, otherwise things get quirky.</p>
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Nathan Cahill
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'nathancahill';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://nathancahill.github.com/installing-homebrew-on-mac-osx-mavericks/';
+        var disqus_url = 'http://nathancahill.github.com/installing-homebrew-on-mac-osx-mavericks/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-29405367-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

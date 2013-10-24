@@ -7,7 +7,7 @@
 	<meta name="author" content="Nathan Cahill">
 
 	
-	<meta name="description" content="Since diff was first published in 1974, file comparison tools have been a staple of any developers toolbelt. Especially when using git, I run diffs &hellip;">
+	<meta name="description" content="I wrote a cross-browser extension to replace the ads in the sidebar of Facebook with content of my own. Facebook uses entirely client-side &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -75,6 +75,112 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-24T04:02:00-07:00" pubdate data-updated="true">Oct 24<span>th</span>, 2013</time></div>
+	<h1 class="title"><a href="/jetpack/">Jetpack, HTML5 pushState and unsafeWindow</a></h1>
+	<div class="entry-content">
+		<p>I wrote a cross-browser extension to replace the ads in the sidebar of Facebook with content of my own. Facebook uses entirely client-side navigation: new data for the next view is loaded via Ajax, pushState is fired, and the next view is rendered.</p>
+
+<p>Unfortunately, Firefox Jetpack is still lagging behind the support that Chrome extensions have for navigation events. In Chrome, it was simple to set up a listener for URL changes:</p>
+
+<pre><code>var match = ""; // the url to match
+var callback = function(tabId, changeInfo, tab) {
+    if (changeInfo.url.indexOf(match) != -1 || changeInfo.url == match) {
+        chrome.tabs.executeScript(null, {file:"lib/jquery-1.8.3.min.js"}, function() {
+            chrome.tabs.executeScript(null, {file:"scripts/bgs.js"}); // the script to execute
+        });
+    }
+};
+
+chrome.tabs.onUpdated.addListener(callback);
+</code></pre>
+
+<p>Jetpack was a little more involved. The closest listener available is called <code>pageshow</code>, but it’s a far cry from Chrome’s onUpdate. Ultimately, the best choice ended up being to extend the window’s history object in JavaScript to add a listener for pushState events.</p>
+
+<pre><code>var match = ""; // the url to match
+var pushState = history.pushState;
+unsafeWindow.history.pushState = function(state) {
+    if (typeof history.onpushstate == "function") {
+        if (state.indexOf(match) != -1 || state == match) {
+            history.onpushstate({state: state});
+        }
+    }
+    return pushState.apply(history, arguments);
+}
+
+unsafeWindow.history.onpushstate = function(state) {callback();};
+</code></pre>
+
+<p>Similar to the <code>onpopstate</code> event, this method implements <code>onpushstate</code> by monkey patching the native history object. While using the <code>unsafeWindow</code> object is frowned upon (and rightly so), I’m limiting my exposure by restricting the plugin to facebook.com, and chances are, they won’t change their codebase to exploit my extension.</p>
+
+<p>I did find that I needed to add a small delay with setTimeout before I loaded my content, after pushState event was handled. This allowed the DOM time to process the changes for the new view.</p>
+
+		
+		
+	</div>
+</article>
+
+
+    <article class="post">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-12T01:41:00-07:00" pubdate data-updated="true">Jun 12<span>th</span>, 2013</time></div>
+	<h1 class="title"><a href="/installing-homebrew-on-mac-osx-mavericks/">Installing Homebrew on Mac OSX 10.9 Mavericks</a></h1>
+	<div class="entry-content">
+		<p><strong>Note: This is a hack. Read the comments, specifically Daniel Dunbar&#8217;s, for a better way to do this. Do not use this method anymore. </strong></p>
+
+<p>After installing the developer preview of Mac OSX Mavericks, I started installing my usual list of apps, tools and tweaks. First on the list is always <a href="http://mxcl.github.io/homebrew/">Homebrew</a>, my favorite command line tool. It took a little finessing to get it running, but it works fine, despite the warnings about 10.9 being unsupported.</p>
+
+<p>Before trying to install any packages, I installed the developer preview of Xcode 5 to get the command line tools for compiling. Without the command line tools, you get errors like this trying to install git: <code>git-credential-osxkeychain.c:131: error: ‘protocol’ undeclared (first use in this function)</code></p>
+
+<p>Unfortunately, it seems that Xcode 5 is doing something different with the command line tools. They are not available for download as they were in Xcode 4.</p>
+
+<p><img src="http://nathancahill.github.com/images/downloads.jpg"></p>
+
+<p>I also tried using Kenneth Reitz’s wonderful <a href="https://github.com/kennethreitz/osx-gcc-installer">osx-gcc-installer</a>, but Homebrew complained about mismatched compiler versions when using the Mountain Lion installer.</p>
+
+<p>The trick is to download the command line tools from <a href="https://developer.apple.com/downloads/index.action">developer.apple.com</a> and spoof the OS version as 10.8 so that it can be installed. Simply change two lines in /System/Library/CoreServices/SystemVersion.plist:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;key&gt;ProductUserVisibleVersion&lt;/key&gt;
+</span><span class='line'>&lt;string&gt;10.8&lt;/string&gt;
+</span><span class='line'>&lt;key&gt;ProductVersion&lt;/key&gt;
+</span><span class='line'>&lt;string&gt;10.8&lt;/string&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You may have to reboot after changing the version. Be sure to change it back to 10.9 after installing the command line tools, otherwise things get quirky.</p>
+
+		
+		
+	</div>
+</article>
 
 
     <article class="post">
@@ -470,182 +576,6 @@ and running it from a VM. Entire operating system in memory.</li>
 <p>What&#8217;s next? Where do we go from here? We are still a solid community of michiganders, hacking and hustling our way through the startup life. Props to Bashaw for adding Kyle Mulka, Ryan Goins and Nate West as admins. You&#8217;ve all been doing a great job keeping everything running smoothly. And I&#8217;m excited for the H&amp;H stickers too, they are awesome. If you haven&#8217;t yet, go check them out <a href="https://www.facebook.com/groups/hackersandhustlers/permalink/433723686664757/">here</a>.</p>
 
 <p>So here&#8217;s what I suggest: Let&#8217;s participate more in discussions and let&#8217;s post stuff that&#8217;s more relevant to the group. Let&#8217;s see the projects you guys are working on, instead of the latest trend on HN! Don&#8217;t just ask for an endorsement on Start Garden, post a Show H&amp;H of your prototype or even just your landing page. Give feedback, mentor, and encourage others. And for gods sake, post jobs to hackersandhustlers.org. Thoughtful discussion online (gasp) is not dead!</p>
-
-		
-		
-	</div>
-</article>
-
-
-    <article class="post">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-24T03:28:00-07:00" pubdate data-updated="true">Sep 24<span>th</span>, 2012</time></div>
-	<h1 class="title"><a href="/circus/">Circus, Nginx and Websockets</a></h1>
-	<div class="entry-content">
-		<p>Looking for a high performance, powerfull process manager for a Python project I&#8217;m working on, I stumbled on <a href="http://circus.io/">Circus</a> on this <a href="http://blog.ziade.org/2012/06/28/wgsi-web-servers-bench/">excellent benchmark blog post</a>. After running my own benchmark tests, I agree that the <a href="http://circus.io/">Circus</a> + <a href="http://chaussette.readthedocs.org">Chaussette</a> + <a href="http://meinheld.org/">Meinheld</a> stack is the way to go. High concurrency, fast response time, and socket support are the features that pulled me in. I&#8217;m switching off of <a href="http://supervisord.org/">Supervisord</a>, because: a) Circus integrates directly with <a href="http://zeromq.org/">ZeroMQ</a>, and b) <a href="http://gunicorn.org/">Gunicorn</a> + Supervisord requires two levels of process management: Supervisor controls gunicorn, and gunicorn in turn watching it&#8217;s own worker processes. Circus keeps everything on the same level.</p>
-
-<p><a href="http://circus.readthedocs.org/">circus.readthedocs.org</a> has excellent documentation for getting started with Circus. I did run in to a couple caveats though:</p>
-
-<h2>Circus doesn&#8217;t start on boot</h2>
-
-<p>I started testing Circus in the command line by running <code>circusd circus.ini</code>. I quickly switched to running it as a service in Upstart, using this <code>etc/init/circus.conf</code> file:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">start</span> <span class="n">on</span> <span class="n">filesystem</span> <span class="ow">and</span> <span class="n">net</span><span class="o">-</span><span class="n">device</span><span class="o">-</span><span class="n">up</span> <span class="n">IFACE</span><span class="o">=</span><span class="n">lo</span>
-</span><span class='line'><span class="k">exec</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">circusd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">circus</span><span class="o">.</span><span class="n">ini</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This script just waits for the file system and networking to become available, then it runs <code>circusd</code> with my config file in <code>/etc/circus.ini</code>. Easy enough.</p>
-
-<h2>Getting Circus workers to work with virtual environments</h2>
-
-<p>Although Circus workers have awesome properties like env, copy_env and copy_path (which all work great when running from a local folder), this falls apart when starting the daemon from Upstart. I looked at my $PATH variable in an active environment, and copied it into the worker config:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">env</span> <span class="o">=</span> <span class="n">PATH</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">venv</span><span class="o">/</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">sbin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="n">sbin</span><span class="p">:</span><span class="o">/</span><span class="nb">bin</span><span class="p">,</span><span class="n">VIRTUAL_ENV</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">venv</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Circus Web Console behind Nginx with Sockets</h2>
-
-<p>Circus has a sweet web console to manage processes and workers. By default, it runs on port 8080, and uses websockets to push stats on CPU, memory and socket reads for each running process. The web console should never be publicly available, it allows arbitrary commands to be executed on the server. The preferred way to password protect the console is to use Nginx like so:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">server</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">listen</span>  <span class="mi">8001</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">location</span> <span class="o">~/</span><span class="n">media</span><span class="o">/*</span><span class="p">(</span><span class="o">.</span><span class="n">jpg</span><span class="o">|.</span><span class="n">css</span><span class="o">|.</span><span class="n">js</span><span class="p">)</span><span class="err">$</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">alias</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">circus</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">location</span> <span class="o">/</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">proxy_set_header</span> <span class="n">X</span><span class="o">-</span><span class="n">Forwarded</span><span class="o">-</span><span class="n">For</span> <span class="err">$</span><span class="n">proxy_add_x_forwarded_for</span><span class="p">;</span>
-</span><span class='line'>      <span class="n">proxy_set_header</span> <span class="n">Host</span> <span class="err">$</span><span class="n">http_host</span><span class="p">;</span>
-</span><span class='line'>      <span class="n">proxy_redirect</span> <span class="n">off</span><span class="p">;</span>
-</span><span class='line'>      <span class="n">proxy_pass</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">8080</span><span class="p">;</span>
-</span><span class='line'>      <span class="n">auth_basic</span>            <span class="s">&quot;Restricted&quot;</span><span class="p">;</span>
-</span><span class='line'>      <span class="n">auth_basic_user_file</span>  <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">htpasswd</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I have the web console process listening on 8080: it&#8217;s serving both the website and the socket connection. Notice the issue? Nginx <a href="https://github.com/LearnBoost/socket.io/wiki/Nginx-and-socket.io">doesn&#8217;t support websockets</a>! So I&#8217;m running Nginx on port 8001, and the web console processs on 8080. And this is where Varnish comes in: Varnish is a caching proxy, but I&#8217;ll just use it to multiplex port 8002 to two seperate backends. If the connection is a websocket, route it directly to 8080. If it&#8217;s the website, switch the backend to Nginx on port 8001:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">backend</span> <span class="n">default</span> <span class="p">{</span>
-</span><span class='line'>    <span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="s">&quot;127.0.0.1&quot;</span><span class="p">;</span>
-</span><span class='line'>    <span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="s">&quot;8001&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">backend</span> <span class="n">socket</span> <span class="p">{</span>
-</span><span class='line'>    <span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="s">&quot;127.0.0.1&quot;</span><span class="p">;</span>
-</span><span class='line'>    <span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="s">&quot;8080&quot;</span><span class="p">;</span>
-</span><span class='line'>    <span class="o">.</span><span class="n">connect_timeout</span> <span class="o">=</span> <span class="mi">1</span><span class="n">s</span><span class="p">;</span>
-</span><span class='line'>    <span class="o">.</span><span class="n">first_byte_timeout</span> <span class="o">=</span> <span class="mi">2</span><span class="n">s</span><span class="p">;</span>
-</span><span class='line'>    <span class="o">.</span><span class="n">between_bytes_timeout</span> <span class="o">=</span> <span class="mi">60</span><span class="n">s</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">sub</span> <span class="n">vcl_pipe</span> <span class="p">{</span>
-</span><span class='line'>     <span class="k">if</span> <span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">upgrade</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>         <span class="nb">set</span> <span class="n">bereq</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">upgrade</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">upgrade</span><span class="p">;</span>
-</span><span class='line'>     <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">sub</span> <span class="n">vcl_recv</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">Upgrade</span> <span class="o">~</span> <span class="s">&quot;(?i)websocket&quot;</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nb">set</span> <span class="n">req</span><span class="o">.</span><span class="n">backend</span> <span class="o">=</span> <span class="n">socket</span><span class="p">;</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span><span class="n">pipe</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-		
-		
-	</div>
-</article>
-
-
-    <article class="post">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-19T04:32:00-07:00" pubdate data-updated="true">Sep 19<span>th</span>, 2012</time></div>
-	<h1 class="title"><a href="/fontprep-the-missing-css3-font-generator-for-mac-os-x/">FontPrep: The Missing CSS3 Font Generator for Mac OS X</a></h1>
-	<div class="entry-content">
-		<p><img class="right" src="http://nathancahill.github.com/images/window3.png"></p>
-
-<p>A couple days ago, if you asked me how to add webfonts to my website, I would have immediately said <a href="http://www.fontsquirrel.com/">Font Squirrel</a>. One of the reasons that Font Squirrel is awesome is their <a href="http://www.fontsquirrel.com/fontface/generator">@font-face generator</a>. It is the most popular solution for generating webfonts and font CSS online.</p>
-
-<p>That&#8217;s all about to change. See, there are several limitations to using an online generator for fonts. After uploading two or three fonts, it&#8217;s obvious that Font Squirrel would be not be able to handle hundreds of font files. A web browser simply isn&#8217;t built to support that. Previewing generated fonts in the browser on the fly is also impossible. There&#8217;s also the licensing to worry about: Font Squirrel only accepts fonts that are &#8220;legally eligible for web embedding.&#8221;</p>
-
-<p><a href="http://fontprep.com/">FontPrep</a> solves all of this. FontPrep is a native Mac OS X app that prepares your fonts for the web. At its core, it generates webfont bundles with full browser compatibility. After dragging and dropping a TTF font on to the app, the whole bundle can be downloaded, including WOFF, SVG and EOT formats, and the snippets of CSS needed to add these fonts to a website. And that&#8217;s just scraping the surface of what the app can do:</p>
-
-<p>FontPrep can spin up a local server running a font testbed in the browser. After adding fonts to FontPrep, the entire webfont can be previewed in the browser. Every glyph in the typeface is rendered, as well as a waterfall of font sizes and a text area for testing the font with custom text. Font size is easily changed as well.</p>
-
-<p>According to the creators, <a href="https://twitter.com/briangonzalez__">Brian</a> and <a href="https://twitter.com/artisfacto">Matthew Gonzalez</a>, FontPrep was created with the goal of making an &#8220;easy to use, drag &amp; drop OSX app which makes our lives as developers much easier when it comes to working with fonts.&#8221; They succeeded: not only is FontPrep highly functional, it is also beautiful. Admittedly, their app have less options than Expert mode on Font Squirrel, but they are working on adding more support. Meanwhile, head over to <a href="http://fontprep.com/">FontPrep.com</a> and pick up the app. It&#8217;s free for the next 6 hours, after that it costs $5.</p>
 
 		
 		

@@ -4,7 +4,7 @@
   <title><![CDATA[Nathan Cahill]]></title>
   <link href="http://nathancahill.github.com/atom.xml" rel="self"/>
   <link href="http://nathancahill.github.com/"/>
-  <updated>2013-01-23T10:25:00-08:00</updated>
+  <updated>2013-10-24T04:51:52-07:00</updated>
   <id>http://nathancahill.github.com/</id>
   <author>
     <name><![CDATA[Nathan Cahill]]></name>
@@ -12,6 +12,82 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Jetpack, HTML5 pushState and unsafeWindow]]></title>
+    <link href="http://nathancahill.github.com/jetpack/"/>
+    <updated>2013-10-24T04:02:00-07:00</updated>
+    <id>http://nathancahill.github.com/jetpack</id>
+    <content type="html"><![CDATA[<p>I wrote a cross-browser extension to replace the ads in the sidebar of Facebook with content of my own. Facebook uses entirely client-side navigation: new data for the next view is loaded via Ajax, pushState is fired, and the next view is rendered.</p>
+
+<p>Unfortunately, Firefox Jetpack is still lagging behind the support that Chrome extensions have for navigation events. In Chrome, it was simple to set up a listener for URL changes:</p>
+
+<pre><code>var match = ""; // the url to match
+var callback = function(tabId, changeInfo, tab) {
+    if (changeInfo.url.indexOf(match) != -1 || changeInfo.url == match) {
+        chrome.tabs.executeScript(null, {file:"lib/jquery-1.8.3.min.js"}, function() {
+            chrome.tabs.executeScript(null, {file:"scripts/bgs.js"}); // the script to execute
+        });
+    }
+};
+
+chrome.tabs.onUpdated.addListener(callback);
+</code></pre>
+
+<p>Jetpack was a little more involved. The closest listener available is called <code>pageshow</code>, but it’s a far cry from Chrome’s onUpdate. Ultimately, the best choice ended up being to extend the window’s history object in JavaScript to add a listener for pushState events.</p>
+
+<pre><code>var match = ""; // the url to match
+var pushState = history.pushState;
+unsafeWindow.history.pushState = function(state) {
+    if (typeof history.onpushstate == "function") {
+        if (state.indexOf(match) != -1 || state == match) {
+            history.onpushstate({state: state});
+        }
+    }
+    return pushState.apply(history, arguments);
+}
+
+unsafeWindow.history.onpushstate = function(state) {callback();};
+</code></pre>
+
+<p>Similar to the <code>onpopstate</code> event, this method implements <code>onpushstate</code> by monkey patching the native history object. While using the <code>unsafeWindow</code> object is frowned upon (and rightly so), I’m limiting my exposure by restricting the plugin to facebook.com, and chances are, they won’t change their codebase to exploit my extension.</p>
+
+<p>I did find that I needed to add a small delay with setTimeout before I loaded my content, after pushState event was handled. This allowed the DOM time to process the changes for the new view.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Installing Homebrew on Mac OSX 10.9 Mavericks]]></title>
+    <link href="http://nathancahill.github.com/installing-homebrew-on-mac-osx-mavericks/"/>
+    <updated>2013-06-12T01:41:00-07:00</updated>
+    <id>http://nathancahill.github.com/installing-homebrew-on-mac-osx-mavericks</id>
+    <content type="html"><![CDATA[<p><strong>Note: This is a hack. Read the comments, specifically Daniel Dunbar&#8217;s, for a better way to do this. Do not use this method anymore. </strong></p>
+
+<p>After installing the developer preview of Mac OSX Mavericks, I started installing my usual list of apps, tools and tweaks. First on the list is always <a href="http://mxcl.github.io/homebrew/">Homebrew</a>, my favorite command line tool. It took a little finessing to get it running, but it works fine, despite the warnings about 10.9 being unsupported.</p>
+
+<p>Before trying to install any packages, I installed the developer preview of Xcode 5 to get the command line tools for compiling. Without the command line tools, you get errors like this trying to install git: <code>git-credential-osxkeychain.c:131: error: ‘protocol’ undeclared (first use in this function)</code></p>
+
+<p>Unfortunately, it seems that Xcode 5 is doing something different with the command line tools. They are not available for download as they were in Xcode 4.</p>
+
+<p><img src="http://nathancahill.github.com/images/downloads.jpg"></p>
+
+<p>I also tried using Kenneth Reitz’s wonderful <a href="https://github.com/kennethreitz/osx-gcc-installer">osx-gcc-installer</a>, but Homebrew complained about mismatched compiler versions when using the Mountain Lion installer.</p>
+
+<p>The trick is to download the command line tools from <a href="https://developer.apple.com/downloads/index.action">developer.apple.com</a> and spoof the OS version as 10.8 so that it can be installed. Simply change two lines in /System/Library/CoreServices/SystemVersion.plist:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;key&gt;ProductUserVisibleVersion&lt;/key&gt;
+</span><span class='line'>&lt;string&gt;10.8&lt;/string&gt;
+</span><span class='line'>&lt;key&gt;ProductVersion&lt;/key&gt;
+</span><span class='line'>&lt;string&gt;10.8&lt;/string&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You may have to reboot after changing the version. Be sure to change it back to 10.9 after installing the command line tools, otherwise things get quirky.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Kaleidoscope: The Most Powerful Diff Tool for Mac OS X]]></title>

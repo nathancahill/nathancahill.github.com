@@ -1,0 +1,197 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Jetpack, HTML5 pushState and unsafeWindow - Nathan Cahill</title>
+	<meta name="author" content="Nathan Cahill">
+
+	
+	<meta name="description" content="I wrote a cross-browser extension to replace the ads in the sidebar of Facebook with content of my own. Facebook uses entirely client-side navigation &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Nathan Cahill" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="//use.typekit.net/dqs7xdv.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+</head>
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Nathan Cahill</a></h1>
+<nav id="main-nav"><ul class="main">
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="http://www.nathancahill.com">Website + Portfolio</a></li>
+	<li><a href="https://github.com/nathancahill">Github</a></li>
+	<li><a href="https://twitter.com/nathancahill">Twitter</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/blog/archives">Archives</a></li>
+	<li><a href="http://www.nathancahill.com">Website + Portfolio</a></li>
+	<li><a href="https://github.com/nathancahill">Github</a></li>
+	<li><a href="https://twitter.com/nathancahill">Twitter</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:nathancahill.github.com">
+			</form>
+		</div>
+	</div>
+</nav>
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:nathancahill.github.com">
+	</form>
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-24T04:02:00-07:00" pubdate data-updated="true">Oct 24<span>th</span>, 2013</time></div>
+	<h1 class="title">Jetpack, HTML5 pushState and unsafeWindow</h1>
+	<div class="entry-content"><p>I wrote a cross-browser extension to replace the ads in the sidebar of Facebook with content of my own. Facebook uses entirely client-side navigation: new data for the next view is loaded via Ajax, pushState is fired, and the next view is rendered.</p>
+
+<p>Unfortunately, Firefox Jetpack is still lagging behind the support that Chrome extensions have for navigation events. In Chrome, it was simple to set up a listener for URL changes:</p>
+
+<pre><code>var match = ""; // the url to match
+var callback = function(tabId, changeInfo, tab) {
+    if (changeInfo.url.indexOf(match) != -1 || changeInfo.url == match) {
+        chrome.tabs.executeScript(null, {file:"lib/jquery-1.8.3.min.js"}, function() {
+            chrome.tabs.executeScript(null, {file:"scripts/bgs.js"}); // the script to execute
+        });
+    }
+};
+
+chrome.tabs.onUpdated.addListener(callback);
+</code></pre>
+
+<p>Jetpack was a little more involved. The closest listener available is called <code>pageshow</code>, but it’s a far cry from Chrome’s onUpdate. Ultimately, the best choice ended up being to extend the window’s history object in JavaScript to add a listener for pushState events.</p>
+
+<pre><code>var match = ""; // the url to match
+var pushState = history.pushState;
+unsafeWindow.history.pushState = function(state) {
+    if (typeof history.onpushstate == "function") {
+        if (state.indexOf(match) != -1 || state == match) {
+            history.onpushstate({state: state});
+        }
+    }
+    return pushState.apply(history, arguments);
+}
+
+unsafeWindow.history.onpushstate = function(state) {callback();};
+</code></pre>
+
+<p>Similar to the <code>onpopstate</code> event, this method implements <code>onpushstate</code> by monkey patching the native history object. While using the <code>unsafeWindow</code> object is frowned upon (and rightly so), I’m limiting my exposure by restricting the plugin to facebook.com, and chances are, they won’t change their codebase to exploit my extension.</p>
+
+<p>I did find that I needed to add a small delay with setTimeout before I loaded my content, after pushState event was handled. This allowed the DOM time to process the changes for the new view.</p>
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2013
+
+    Nathan Cahill
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'nathancahill';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://nathancahill.github.com/jetpack/';
+        var disqus_url = 'http://nathancahill.github.com/jetpack/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-29405367-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>
